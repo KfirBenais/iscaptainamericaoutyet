@@ -3,11 +3,16 @@ import './App.css';
 
 function App() {
   const phrases = [
-    "No, the movie is not out yet.",
-    "Sorry, the movie hasn't been released yet.",
-    "Not yet, the movie is still not out.",
-    "The movie is not available yet.",
-    "Nope, the movie is still not released."
+    "No, PAZ, the movie is not out for download yet.",
+    "Sorry, PAZ, the movie hasn't been released for download yet.",
+    "Not yet, PAZ, the movie is still not out for download.",
+    "The movie is not available for download yet, PAZ.",
+    "Nope, PAZ, the movie is still not released for download.",
+    "Hang tight, PAZ, the movie isn't out for download yet.",
+    "PAZ, you'll have to wait a bit longer, the movie isn't available for download.",
+    "Unfortunately, PAZ, the movie is not ready for download yet.",
+    "PAZ, the movie is still not out for download, please check back later.",
+    "No, PAZ, the movie hasn't been released for download yet, stay tuned."
   ];
 
   const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
@@ -16,7 +21,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1 style={{ textDecoration: 'underline' }}> 
-          Is "Captain America: Brave New World" out yet?
+          Is "Captain America: Brave New World" out for download yet?
         </h1>
         <p>
           {randomPhrase}
