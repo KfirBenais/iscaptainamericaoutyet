@@ -1,20 +1,23 @@
-import logo from './ImportedPhoto.763906934.71299.jpeg';
+import logo from './ImportedPhoto.763971766.79542.jpeg';
 import './App.css';
 
 function App() {
+  // const phrases = [
+  //   "No, PAZ, the movie is not out for download yet.",
+  //   "Sorry, PAZ, the movie hasn't been released for download yet.",
+  //   "Not yet, PAZ, the movie is still not out for download.",
+  //   "The movie is not available for download yet, PAZ.",
+  //   "Nope, PAZ, the movie is still not released for download.",
+  //   "Hang tight, PAZ, the movie isn't out for download yet.",
+  //   "PAZ, you'll have to wait a bit longer, the movie isn't available for download.",
+  //   "Unfortunately, PAZ, the movie is not ready for download yet.",
+  //   "PAZ, the movie is still not out for download, please check back later.",
+  //   "No, PAZ, the movie hasn't been released for download yet, stay tuned."
+  // ];
   const phrases = [
-    "No, PAZ, the movie is not out for download yet.",
-    "Sorry, PAZ, the movie hasn't been released for download yet.",
-    "Not yet, PAZ, the movie is still not out for download.",
-    "The movie is not available for download yet, PAZ.",
-    "Nope, PAZ, the movie is still not released for download.",
-    "Hang tight, PAZ, the movie isn't out for download yet.",
-    "PAZ, you'll have to wait a bit longer, the movie isn't available for download.",
-    "Unfortunately, PAZ, the movie is not ready for download yet.",
-    "PAZ, the movie is still not out for download, please check back later.",
-    "No, PAZ, the movie hasn't been released for download yet, stay tuned."
-  ];
+    "YES",
 
+  ];
   const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
 
   return (
