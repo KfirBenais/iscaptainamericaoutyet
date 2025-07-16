@@ -22,13 +22,13 @@ function App() {
     { name: "Balls Vortex", price: 15, image: "./Images/Balls Vortex.webp", category: "Fidgets" },
     { name: "Large hexagon", price: 20, image: "./Images/Hexagon.webp", category: "Fidgets" },
     { name: "Ghost on skateboard", price: 20, image: "./Images/Ghost on skateboard.webp", category: "Decorative" },
-    { name: "Small Batman", price: 20, image: "./Images/LittleBatman.jpg", category: "Figurines" },
+    { name: "Small Batman", price: 15, image: "./Images/LittleBatman.jpg", category: "Figurines" },
     { name: "Small Labubu", price: 20, image: "./Images/SmallLabubu.jpg", category: "Figurines" },
     { name: "Large Labubu", price: 30, image: "./Images/LargeLabubu.jpg", category: "Figurines" },
     { name: "Pikachu Labubu", price: 40, image: "./Images/Labubupikachu.jpg", category: "Figurines" },
     { name: "Jelly Fish", price: 20, image: "./Images/jellyfish.jpg", category: "Decorative" },
-    { name: "Jelly Fish On Stand", price: 30, image: "./Images/jellyfishOnStand.webp", category: "Decorative" },
-    { name: "Candy Dispenser", price: 40, image: "./Images/Candy Dispenser.jpg", category: "Toys" },
+    { name: "Jelly Fish On Stand", price: 25, image: "./Images/jellyfishOnStand.webp", category: "Decorative" },
+    { name: "Candy Dispenser", price: 35, image: "./Images/Candy Dispenser.jpg", category: "Toys" },
     { name: "Iran War Set", price: 50, image: "./Images/IranWarSet.jpg", category: "Toys" },
     { name: "Door Stopper", price: 10, image: "./Images/DoorStopper.jpg", category: "Utilities" }
   ];
