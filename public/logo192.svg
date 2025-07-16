@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+  <!-- Background Circle -->
+  <circle cx="96" cy="96" r="96" fill="url(#gradient)"/>
+  
+  <!-- Gradient Definition -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 3D Printer Icon -->
+  <g transform="translate(48, 48)">
+    <!-- Base -->
+    <rect x="16" y="80" width="64" height="16" rx="3" fill="#ffffff" opacity="0.9"/>
+    
+    <!-- Frame -->
+    <rect x="20" y="30" width="56" height="50" fill="none" stroke="#ffffff" stroke-width="4" opacity="0.9"/>
+    
+    <!-- Print Bed -->
+    <rect x="24" y="68" width="48" height="4" fill="#00b894"/>
+    
+    <!-- Extruder -->
+    <rect x="40" y="45" width="16" height="12" fill="#ffffff" opacity="0.9"/>
+    
+    <!-- Printed Object -->
+    <rect x="38" y="58" width="20" height="10" fill="#fd79a8"/>
+    
+    <!-- Support Rods -->
+    <rect x="22" y="30" width="3" height="50" fill="#ffffff" opacity="0.8"/>
+    <rect x="71" y="30" width="3" height="50" fill="#ffffff" opacity="0.8"/>
+    
+    <!-- Top Frame -->
+    <rect x="20" y="30" width="56" height="4" fill="#ffffff" opacity="0.9"/>
+  </g>
+</svg>

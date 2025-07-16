@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- 3D Printer Base -->
+  <rect x="8" y="45" width="48" height="12" rx="2" fill="#667eea"/>
+  
+  <!-- 3D Printer Frame -->
+  <rect x="12" y="15" width="40" height="30" fill="none" stroke="#667eea" stroke-width="3"/>
+  
+  <!-- Print Bed -->
+  <rect x="16" y="38" width="32" height="3" fill="#a29bfe"/>
+  
+  <!-- Extruder -->
+  <rect x="28" y="25" width="8" height="8" fill="#00b894"/>
+  
+  <!-- Printed Object -->
+  <rect x="26" y="32" width="12" height="6" fill="#fd79a8"/>
+  
+  <!-- Support Rods -->
+  <rect x="14" y="15" width="2" height="30" fill="#636e72"/>
+  <rect x="48" y="15" width="2" height="30" fill="#636e72"/>
+  
+  <!-- Top Frame -->
+  <rect x="12" y="15" width="40" height="3" fill="#667eea"/>
+</svg>
