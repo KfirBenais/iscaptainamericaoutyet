@@ -14,7 +14,7 @@ function App() {
     { name: "ForeverSpin spinning top", price: 15, image: "./Images/spinning top.webp" },
         { name: "Vortex Man", price: 15, image: "./Images/VortexMan.webp" },
     { name: "Vortex Pyramid", price: 10, image: "./Images/VortexPyramid.webp" },
-    { name: "Plane With Gun Set", price: 50, image: "./Images/PlaneWithGunSet.jpg" },
+    { name: "Plane With Gun Set", price: 25, image: "./Images/PlaneWithGunSet.jpg" },
     { name: "Maracas", price: 20, image: "./Images/Maracas.jpg" },
     { name: "Dragon", price: 25, image: "./Images/Dragon.jpg" },
     { name: "Balls Vortex", price: 15, image: "./Images/Balls Vortex.webp" },
