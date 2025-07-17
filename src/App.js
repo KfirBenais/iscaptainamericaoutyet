@@ -7,6 +7,7 @@ function App() {
 
   const products = [
     { name: "Supermarket CartCoin", price: 5, image: "./Images/SuperMarketCoin.jpg", category: "Utilities" },
+    { name: "Heart KeyChain", price: 5, image: "./Images/HeartKeyChain.jpg", category: "Fidgets" },
     { name: "Gear Rhombo", price: 15, image: "./Images/Gear Rhombo.webp", category: "Fidgets" },
     { name: "Casino chips", price: 15, image: "./Images/Casino chips.webp", category: "Fidgets" },
     { name: "Spinner", price: 15, image: "./Images/spinner.webp", category: "Fidgets" },
@@ -22,6 +23,7 @@ function App() {
     { name: "Balls Vortex", price: 15, image: "./Images/Balls Vortex.webp", category: "Fidgets" },
     { name: "Large hexagon", price: 20, image: "./Images/Hexagon.webp", category: "Fidgets" },
     { name: "Ghost on skateboard", price: 20, image: "./Images/Ghost on skateboard.webp", category: "Decorative" },
+    { name: "Knitted Animals", price: 15, image: "./Images/knittedAnimels.webp", category: "Figurines" },
     { name: "Small Batman", price: 15, image: "./Images/LittleBatman.jpg", category: "Figurines" },
     { name: "Small Labubu", price: 20, image: "./Images/SmallLabubu.jpg", category: "Figurines" },
     { name: "Large Labubu", price: 30, image: "./Images/LargeLabubu.jpg", category: "Figurines" },
@@ -30,7 +32,8 @@ function App() {
     { name: "Jelly Fish On Stand", price: 25, image: "./Images/jellyfishOnStand.webp", category: "Decorative" },
     { name: "Candy Dispenser", price: 35, image: "./Images/Candy Dispenser.jpg", category: "Toys" },
     { name: "Iran War Set", price: 50, image: "./Images/IranWarSet.jpg", category: "Toys" },
-    { name: "Door Stopper", price: 10, image: "./Images/DoorStopper.jpg", category: "Utilities" }
+    { name: "Door Stopper", price: 10, image: "./Images/DoorStopper.jpg", category: "Utilities" },
+    { name: "Custom Name Plate", price: 20, image: "./Images/CustomNamePlate.webp", category: "Decorative" }
   ];
 
   // Get unique categories
