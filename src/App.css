@@ -125,6 +125,31 @@
 .color-square.green { background-color: #27ae60; }
 .color-square.bronze { background-color: #cd7f32; }
 .color-square.purple { background-color: #9b59b6; }
+.color-square.titanium-carbon { 
+  background: linear-gradient(45deg, #5a6572, #414a56);
+  position: relative;
+  overflow: hidden;
+}
+.color-square.titanium-carbon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    repeating-linear-gradient(45deg, 
+      transparent, 
+      transparent 2px, 
+      rgba(0,0,0,0.1) 2px, 
+      rgba(0,0,0,0.1) 4px),
+    repeating-linear-gradient(-45deg, 
+      transparent, 
+      transparent 2px, 
+      rgba(255,255,255,0.05) 2px, 
+      rgba(255,255,255,0.05) 4px);
+  pointer-events: none;
+}
 
 @keyframes rainbow-shift {
   0%, 100% { filter: hue-rotate(0deg); }

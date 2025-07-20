@@ -33,7 +33,8 @@ function App() {
     { name: "Candy Dispenser", price: 35, image: "./Images/Candy Dispenser.jpg", category: "Toys" },
     { name: "Iran War Set", price: 50, image: "./Images/IranWarSet.jpg", category: "Toys" },
     { name: "Door Stopper", price: 10, image: "./Images/DoorStopper.jpg", category: "Utilities" },
-    { name: "Custom Name Plate", price: 20, image: "./Images/CustomNamePlate.webp", category: "Decorative" }
+    { name: "Custom Name Plate", price: 20, image: "./Images/CustomNamePlate.webp", category: "Decorative" },
+    { name: "Switch 2 Mouse Adapter", price: 40, image: "./Images/Switch2MouseAdapter.jpg", category: "Utilities" },
   ];
 
   // Get unique categories
@@ -109,6 +110,10 @@ function App() {
             <div className="color-item">
               <div className="color-square purple"></div>
               <span>Purple</span>
+            </div>
+            <div className="color-item">
+              <div className="color-square titanium-carbon"></div>
+              <span>Titanium Gray Carbon Fiber</span>
             </div>
           </div>
         </div>
