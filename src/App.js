@@ -18,11 +18,12 @@ function App() {
     { name: "Vortex Pyramid", price: 10, image: "./Images/VortexPyramid.webp", category: "Fidgets" },
     { name: "Plane With Gun Set", price: 25, image: "./Images/PlaneWithGunSet.jpg", category: "Toys" },
     { name: "Extra Plane", price: 10, image: "./Images/Plane.webp", category: "Toys" },
+    { name: "Desk Basketball hoop", price: 30, image: "./Images/DeskBasketball.webp", category: "Toys" },
     { name: "Maracas", price: 15, image: "./Images/Maracas.jpg", category: "Toys" },
     { name: "Dragon", price: 25, image: "./Images/Dragon.jpg", category: "Decorative" },
     { name: "Balls Vortex", price: 15, image: "./Images/Balls Vortex.webp", category: "Fidgets" },
     { name: "Large hexagon", price: 20, image: "./Images/Hexagon.webp", category: "Fidgets" },
-    { name: "Ghost on skateboard", price: 20, image: "./Images/Ghost on skateboard.webp", category: "Decorative" },
+    { name: "Ghost on skateboard", price: 20, image: "./Images/Ghost on skateboard.webp", category: "Toys" },
     { name: "Knitted Animals", price: 15, image: "./Images/knittedAnimels.webp", category: "Figurines" },
     { name: "Small Batman", price: 15, image: "./Images/LittleBatman.jpg", category: "Figurines" },
     { name: "Small Labubu", price: 20, image: "./Images/SmallLabubu.jpg", category: "Figurines" },
@@ -31,10 +32,11 @@ function App() {
     { name: "Jelly Fish", price: 20, image: "./Images/jellyfish.jpg", category: "Decorative" },
     { name: "Jelly Fish On Stand", price: 25, image: "./Images/jellyfishOnStand.webp", category: "Decorative" },
     { name: "Candy Dispenser", price: 35, image: "./Images/Candy Dispenser.jpg", category: "Toys" },
-    { name: "Iran War Set", price: 50, image: "./Images/IranWarSet.jpg", category: "Toys" },
+    { name: "Iran War Set", price: 40, image: "./Images/IranWarSet.jpg", category: "Toys" },
     { name: "Door Stopper", price: 10, image: "./Images/DoorStopper.jpg", category: "Utilities" },
     { name: "Custom Name Plate", price: 20, image: "./Images/CustomNamePlate.webp", category: "Decorative" },
-    { name: "Switch 2 Mouse Adapter", price: 40, image: "./Images/Switch2MouseAdapter.jpg", category: "Utilities" },
+    { name: "Switch 2 Mouse Adapter", price: 30, image: "./Images/Switch2MouseAdapter.jpg", category: "Utilities" },
+    { name: "Pen Holder - Desk Organizer", price: 30, image: "./Images/PenHolder.jpg", category: "Utilities" },
   ];
 
   // Get unique categories
@@ -114,6 +116,10 @@ function App() {
             <div className="color-item">
               <div className="color-square titanium-carbon"></div>
               <span>Titanium Gray Carbon Fiber</span>
+            </div>
+            <div className="color-item">
+              <div className="color-square green-red-darkblue"></div>
+              <span>Green/Red/Blue Mix</span>
             </div>
           </div>
         </div>
