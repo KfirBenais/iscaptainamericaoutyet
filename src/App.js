@@ -7,7 +7,8 @@ function App() {
 
   const products = [
     { name: "Supermarket CartCoin", price: 5, image: "./Images/SuperMarketCoin.jpg", category: "Utilities" },
-    { name: "Heart KeyChain", price: 5, image: "./Images/HeartKeyChain.jpg", category: "Fidgets" },
+    { name: "Hamsa", price: 5, image: "./Images/Hamsa.jpg", category: "Decorative" },
+    { name: "Heart KeyChain", price: 5, image: "./Images/HeartKeyChain.jpg", category: "Decorative" },
     { name: "Gear Rhombo", price: 15, image: "./Images/Gear Rhombo.webp", category: "Fidgets" },
     { name: "Casino chips", price: 15, image: "./Images/Casino chips.webp", category: "Fidgets" },
     { name: "Spinner", price: 15, image: "./Images/spinner.webp", category: "Fidgets" },
