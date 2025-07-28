@@ -76,13 +76,28 @@ export const sendCustomerConfirmation = async (orderData) => {
       website_link: window.location.origin,
       // Format items for the beautiful template
       orders: orderData.items.map(item => {
-        // For development, use a placeholder service, for production use actual domain
         const isLocalhost = window.location.hostname === 'localhost';
-        const imageUrl = isLocalhost 
-          ? `https://via.placeholder.com/64x64/f0f0f0/666?text=${encodeURIComponent(item.product.name.slice(0,3))}` // Placeholder for development
-          : `${window.location.origin}/Images/${item.product.image.split('/').pop()}`; // Real images for production
         
-        console.log('Product:', item.product.name, 'Image URL:', imageUrl, 'Is localhost:', isLocalhost);
+        let imageUrl;
+        if (isLocalhost) {
+          // Development: Use placeholder with product initials
+          imageUrl = `https://via.placeholder.com/64x64/4CAF50/white?text=${encodeURIComponent(item.product.name.slice(0,2))}`;
+        } else {
+          // Production: Try real images first, but use a guaranteed fallback
+          const imageName = item.product.image.split('/').pop();
+          const realImageUrl = `${window.location.origin}/Images/${imageName}`;
+          
+          // For email compatibility, let's use a more reliable placeholder service as fallback
+          // You can replace this with actual images once we verify the correct path
+          imageUrl = `https://via.placeholder.com/64x64/2196F3/white?text=${encodeURIComponent(item.product.name.slice(0,2))}`;
+          
+          // TODO: Test if realImageUrl works, then switch back to: imageUrl = realImageUrl;
+        }
+        
+        console.log('Product:', item.product.name);
+        console.log('Generated URL:', imageUrl);
+        console.log('Is localhost:', isLocalhost);
+        
         return {
           name: `${item.product.name} (${item.colors.join(', ')})`,
           units: item.quantity,
@@ -158,8 +173,10 @@ export const sendOrderEmail = async (orderData) => {
  * Test if product images are accessible
  */
 export const testImageUrls = () => {
-  console.log('Testing image URLs...');
-  console.log('Origin:', window.location.origin);
+  console.log('=== IMAGE URL DEBUGGING ===');
+  console.log('Current origin:', window.location.origin);
+  console.log('Current hostname:', window.location.hostname);
+  console.log('Is localhost:', window.location.hostname === 'localhost');
   
   // Test a few sample products
   const sampleProducts = [
@@ -169,20 +186,52 @@ export const testImageUrls = () => {
   ];
   
   sampleProducts.forEach(product => {
-    const imageUrl = `${window.location.origin}/Images/${product.image.split('/').pop()}`;
-    console.log(`Product: ${product.name}`);
-    console.log(`Original path: ${product.image}`);
-    console.log(`Generated URL: ${imageUrl}`);
+    const imageName = product.image.split('/').pop();
+    const imageUrl = `${window.location.origin}/Images/${imageName}`;
+    const publicImageUrl = `${window.location.origin}/public/Images/${imageName}`;
     
-    // Test if image loads
-    const img = new Image();
-    img.onload = () => console.log(`✅ ${product.name} image loads successfully`);
-    img.onerror = () => console.log(`❌ ${product.name} image failed to load`);
-    img.src = imageUrl;
+    console.log(`\n--- ${product.name} ---`);
+    console.log(`Original path: ${product.image}`);
+    console.log(`Image name: ${imageName}`);
+    console.log(`URL 1: ${imageUrl}`);
+    console.log(`URL 2: ${publicImageUrl}`);
+    
+    // Test both URLs
+    [imageUrl, publicImageUrl].forEach((url, index) => {
+      const img = new Image();
+      img.onload = () => console.log(`✅ URL ${index + 1} loads successfully: ${url}`);
+      img.onerror = () => console.log(`❌ URL ${index + 1} failed to load: ${url}`);
+      img.src = url;
+    });
   });
 };
 
-// Make test function available globally
+/**
+ * Alternative: Use a more email-friendly image approach
+ */
+export const testEmailImageCompatibility = async () => {
+  console.log('=== EMAIL IMAGE COMPATIBILITY TEST ===');
+  
+  // Test different image hosting approaches
+  const testUrls = [
+    `${window.location.origin}/Images/Hamsa.jpg`,
+    `${window.location.origin}/public/Images/Hamsa.jpg`,
+    'https://via.placeholder.com/64x64/f0f0f0/666?text=Test',
+    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=64&h=64&fit=crop' // Public CDN test
+  ];
+  
+  for (const url of testUrls) {
+    try {
+      const response = await fetch(url);
+      console.log(`${response.ok ? '✅' : '❌'} ${url} - Status: ${response.status}`);
+    } catch (error) {
+      console.log(`❌ ${url} - Error: ${error.message}`);
+    }
+  }
+};
+
+// Make test functions available globally
 if (typeof window !== 'undefined') {
   window.testImageUrls = testImageUrls;
+  window.testEmailImageCompatibility = testEmailImageCompatibility;
 }
