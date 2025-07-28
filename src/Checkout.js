@@ -27,6 +27,11 @@ const Checkout = ({ cart, onClose, onOrderComplete }) => {
       return;
     }
 
+    // Show payment QR code - don't send email yet
+    setShowPaymentQR(true);
+  };
+
+  const handlePaymentComplete = async () => {
     // Prepare order data
     const orderData = {
       customer: customerData,
@@ -39,24 +44,19 @@ const Checkout = ({ cart, onClose, onOrderComplete }) => {
     try {
       console.log('Order Data:', orderData);
       
-      // Show payment QR code first
-      setShowPaymentQR(true);
-      
-      // Send order email
+      // Send order email only after payment is confirmed
       await sendOrderEmail(orderData);
       console.log('Order email sent successfully');
       
+      onOrderComplete();
+      setShowPaymentQR(false);
     } catch (error) {
       console.error('Error processing order:', error);
-      alert('Order placed but email notification failed. We will process your order manually.');
-      // Still show payment QR even if email fails
-      setShowPaymentQR(true);
+      alert('Payment confirmed but email notification failed. We will process your order manually.');
+      // Still complete the order even if email fails
+      onOrderComplete();
+      setShowPaymentQR(false);
     }
-  };
-
-  const handlePaymentComplete = () => {
-    onOrderComplete();
-    setShowPaymentQR(false);
   };
 
   if (showPaymentQR) {
