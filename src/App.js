@@ -85,10 +85,6 @@ function App() {
     ));
   };
 
-  const getCartTotal = () => {
-    return cart.reduce((total, item) => total + item.totalPrice, 0);
-  };
-
   const getCartItemsCount = () => {
     return cart.reduce((total, item) => total + item.quantity, 0);
   };
