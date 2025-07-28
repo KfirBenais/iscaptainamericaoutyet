@@ -145,4 +145,5 @@ export const sendOrderEmail = async (orderData) => {
   }
 };
 
-export default { sendOrderEmail, sendOwnerNotification, sendCustomerConfirmation };
+const emailService = { sendOrderEmail, sendOwnerNotification, sendCustomerConfirmation };
+export default emailService;
