@@ -78,9 +78,10 @@ export const sendCustomerConfirmation = async (orderData) => {
           // Development: Use placeholder with product initials
           imageUrl = `https://via.placeholder.com/64x64/4CAF50/white?text=${encodeURIComponent(item.product.name.slice(0,2))}`;
         } else {
-          // Production: Use real images - they work at /Images/ path!
+          // Production: Use real images with email-friendly approach
           const imageName = item.product.image.split('/').pop();
-          imageUrl = `${window.location.origin}/Images/${imageName}`;
+          // Use absolute URL for better email client compatibility
+          imageUrl = `https://benais3dprints.netlify.app/Images/${imageName}`;
         }
         
         return {
@@ -88,7 +89,10 @@ export const sendCustomerConfirmation = async (orderData) => {
           units: item.quantity,
           price: item.totalPrice,
           image_url: imageUrl,
-          notes: item.notes || ''
+          notes: item.notes || '',
+          // Add fallback text for email clients that block images
+          image_alt: item.product.name,
+          product_code: item.product.name.slice(0,2).toUpperCase()
         };
       }),
       cost: {
