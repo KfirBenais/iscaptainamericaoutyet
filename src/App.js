@@ -14,6 +14,7 @@ function App() {
     { name: "Spinner", price: 15, image: "./Images/spinner.webp", category: "Fidgets" },
     { name: "Infinity cubes", price: 15, image: "./Images/Infinity cubes.webp", category: "Fidgets" },
     { name: "Gearbox", price: 10, image: "./Images/GearBox.webp", category: "Fidgets" },
+    { name: "Nasa Fabric", price: 20, image: "./Images/NasaFabric.jpeg", category: "Fidgets" },
     { name: "ForeverSpin spinning top", price: 10, image: "./Images/spinning top.webp", category: "Toys" },
     { name: "Vortex Man", price: 15, image: "./Images/VortexMan.webp", category: "Decorative" },
     { name: "Vortex Pyramid", price: 10, image: "./Images/VortexPyramid.webp", category: "Fidgets" },
@@ -38,6 +39,7 @@ function App() {
     { name: "Custom Name Plate", price: 20, image: "./Images/CustomNamePlate.webp", category: "Decorative" },
     { name: "Switch 2 Mouse Adapter", price: 30, image: "./Images/Switch2MouseAdapter.jpg", category: "Utilities" },
     { name: "Pen Holder - Desk Organizer", price: 30, image: "./Images/PenHolder.jpg", category: "Utilities" },
+    { name: "Mosquito Net Dual-Sided Tool", price: 10, image: "./Images/MosquitoNetTool.webp", category: "Utilities" },
   ];
 
   // Get unique categories
