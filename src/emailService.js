@@ -78,8 +78,9 @@ export const sendCustomerConfirmation = async (orderData) => {
           // Development: Use placeholder with product initials
           imageUrl = `https://via.placeholder.com/64x64/4CAF50/white?text=${encodeURIComponent(item.product.name.slice(0,2))}`;
         } else {
-          // Production: Use placeholder service for email compatibility
-          imageUrl = `https://via.placeholder.com/64x64/2196F3/white?text=${encodeURIComponent(item.product.name.slice(0,2))}`;
+          // Production: Use real images - they work at /Images/ path!
+          const imageName = item.product.image.split('/').pop();
+          imageUrl = `${window.location.origin}/Images/${imageName}`;
         }
         
         return {
