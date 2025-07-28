@@ -32,19 +32,17 @@
 }
 
 .cart-icon-container {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
   cursor: pointer;
-  padding: 1rem;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem;
+  z-index: 1000;
   transition: all 0.3s ease;
 }
 
 .cart-icon-container:hover {
-  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
 }
 
 .cart-icon {
@@ -738,6 +736,25 @@
   .cart-item {
     flex-direction: column;
     text-align: center;
+  }
+
+  /* Mobile cart icon improvements */
+  .cart-icon-container {
+    right: 0.5rem;
+    top: 0.5rem;
+    padding: 0.4rem;
+  }
+
+  .cart-icon {
+    font-size: 1.4rem;
+  }
+
+  .cart-badge {
+    width: 18px;
+    height: 18px;
+    font-size: 0.65rem;
+    top: -2px;
+    right: -2px;
   }
 }
 
