@@ -1,9 +1,17 @@
 import './App.css';
 import { useState } from 'react';
+import AddToCartModal from './AddToCartModal';
+import Cart from './Cart';
+import Checkout from './Checkout';
 
 function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [cart, setCart] = useState([]);
+  const [showCart, setShowCart] = useState(false);
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [showAddToCart, setShowAddToCart] = useState(false);
+  const [productToAdd, setProductToAdd] = useState(null);
 
   const products = [
     { name: "Supermarket CartCoin", price: 5, image: "./Images/SuperMarketCoin.jpg", category: "Utilities" },
@@ -50,11 +58,62 @@ function App() {
     ? products 
     : products.filter(product => product.category === selectedCategory);
 
+  // Cart functions
+  const addToCart = (product, quantity, colors, notes) => {
+    const cartItem = {
+      id: Date.now(),
+      product,
+      quantity,
+      colors,
+      notes,
+      totalPrice: product.price * quantity
+    };
+    setCart([...cart, cartItem]);
+    setShowAddToCart(false);
+    setProductToAdd(null);
+  };
+
+  const removeFromCart = (itemId) => {
+    setCart(cart.filter(item => item.id !== itemId));
+  };
+
+  const updateCartItem = (itemId, quantity) => {
+    setCart(cart.map(item => 
+      item.id === itemId 
+        ? { ...item, quantity, totalPrice: item.product.price * quantity }
+        : item
+    ));
+  };
+
+  const getCartTotal = () => {
+    return cart.reduce((total, item) => total + item.totalPrice, 0);
+  };
+
+  const getCartItemsCount = () => {
+    return cart.reduce((total, item) => total + item.quantity, 0);
+  };
+
+  const handleAddToCartClick = (product) => {
+    setProductToAdd(product);
+    setShowAddToCart(true);
+    setSelectedProduct(null);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <h1 className="main-title">🎯 Benais 3D Prints Catalog</h1>
-        <p className="subtitle">Quality 3D Printed Products at Great Prices</p>
+        <div className="header-content">
+          <div className="header-title">
+            <h1 className="main-title">🎯 Benais 3D Prints Catalog</h1>
+            <p className="subtitle">Quality 3D Printed Products at Great Prices</p>
+          </div>
+          <div className="cart-icon-container" onClick={() => setShowCart(true)}>
+            <div className="cart-icon">🛒</div>
+            {getCartItemsCount() > 0 && (
+              <div className="cart-badge">{getCartItemsCount()}</div>
+            )}
+          </div>
+        </div>
       </header>
       
       <section className="color-info-section">
@@ -178,7 +237,15 @@ function App() {
               <div className="product-info">
                 <h3 className="product-name">{product.name}</h3>
                 <p className="product-price">{product.price} ₪</p>
-                {/* <button className="contact-button">Contact for Order</button> */}
+                <button 
+                  className="quick-add-to-cart-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleAddToCartClick(product);
+                  }}
+                >
+                  Add to Cart
+                </button>
               </div>
             </div>
           ))}
@@ -223,9 +290,54 @@ function App() {
             <div className="modal-info">
               <h2 className="modal-name">{selectedProduct.name}</h2>
               <p className="modal-price">{selectedProduct.price} ₪</p>
+              <button 
+                className="add-to-cart-btn"
+                onClick={() => handleAddToCartClick(selectedProduct)}
+              >
+                Add to Cart
+              </button>
             </div>
           </div>
         </div>
+      )}
+
+      {/* Add to Cart Modal */}
+      {showAddToCart && productToAdd && (
+        <AddToCartModal
+          product={productToAdd}
+          onAdd={addToCart}
+          onClose={() => {
+            setShowAddToCart(false);
+            setProductToAdd(null);
+          }}
+        />
+      )}
+
+      {/* Cart Modal */}
+      {showCart && (
+        <Cart
+          cart={cart}
+          onClose={() => setShowCart(false)}
+          onRemove={removeFromCart}
+          onUpdateQuantity={updateCartItem}
+          onCheckout={() => {
+            setShowCart(false);
+            setShowCheckout(true);
+          }}
+        />
+      )}
+
+      {/* Checkout Modal */}
+      {showCheckout && (
+        <Checkout
+          cart={cart}
+          onClose={() => setShowCheckout(false)}
+          onOrderComplete={() => {
+            setCart([]);
+            setShowCheckout(false);
+            alert('Order placed successfully! You will receive a confirmation email shortly.');
+          }}
+        />
       )}
     </div>
   );
