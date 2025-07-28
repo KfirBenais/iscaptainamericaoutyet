@@ -145,5 +145,94 @@ export const sendOrderEmail = async (orderData) => {
   }
 };
 
+/**
+ * Test if product images are accessible (production-safe version)
+ */
+export const testImageUrls = () => {
+  const results = [];
+  results.push('=== IMAGE URL DEBUGGING ===');
+  results.push(`Current origin: ${window.location.origin}`);
+  results.push(`Current hostname: ${window.location.hostname}`);
+  results.push(`Is localhost: ${window.location.hostname === 'localhost'}`);
+  
+  // Test a few sample products
+  const sampleProducts = [
+    { name: "Supermarket CartCoin", image: "./Images/SuperMarketCoin.jpg" },
+    { name: "Hamsa", image: "./Images/Hamsa.jpg" },
+    { name: "Heart KeyChain", image: "./Images/HeartKeyChain.jpg" }
+  ];
+  
+  sampleProducts.forEach(product => {
+    const imageName = product.image.split('/').pop();
+    const imageUrl = `${window.location.origin}/Images/${imageName}`;
+    const publicImageUrl = `${window.location.origin}/public/Images/${imageName}`;
+    
+    results.push(`\n--- ${product.name} ---`);
+    results.push(`Original path: ${product.image}`);
+    results.push(`Image name: ${imageName}`);
+    results.push(`URL 1: ${imageUrl}`);
+    results.push(`URL 2: ${publicImageUrl}`);
+    
+    // Test both URLs
+    [imageUrl, publicImageUrl].forEach((url, index) => {
+      const img = new Image();
+      img.onload = () => {
+        results.push(`✅ URL ${index + 1} loads successfully: ${url}`);
+        // eslint-disable-next-line no-console
+        console.log(`✅ URL ${index + 1} loads successfully: ${url}`);
+      };
+      img.onerror = () => {
+        results.push(`❌ URL ${index + 1} failed to load: ${url}`);
+        // eslint-disable-next-line no-console
+        console.log(`❌ URL ${index + 1} failed to load: ${url}`);
+      };
+      img.src = url;
+    });
+  });
+  
+  // eslint-disable-next-line no-console
+  console.log(results.join('\n'));
+  return results;
+};
+
+/**
+ * Test email image compatibility (production-safe version)
+ */
+export const testEmailImageCompatibility = async () => {
+  const results = [];
+  results.push('=== EMAIL IMAGE COMPATIBILITY TEST ===');
+  
+  // Test different image hosting approaches
+  const testUrls = [
+    `${window.location.origin}/Images/Hamsa.jpg`,
+    `${window.location.origin}/public/Images/Hamsa.jpg`,
+    'https://via.placeholder.com/64x64/f0f0f0/666?text=Test',
+    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=64&h=64&fit=crop' // Public CDN test
+  ];
+  
+  for (const url of testUrls) {
+    try {
+      const response = await fetch(url);
+      const message = `${response.ok ? '✅' : '❌'} ${url} - Status: ${response.status}`;
+      results.push(message);
+      // eslint-disable-next-line no-console
+      console.log(message);
+    } catch (error) {
+      const message = `❌ ${url} - Error: ${error.message}`;
+      results.push(message);
+      // eslint-disable-next-line no-console
+      console.log(message);
+    }
+  }
+  
+  return results;
+};
+
+// Make test functions available globally
+if (typeof window !== 'undefined') {
+  window.testImageUrls = testImageUrls;
+  window.testEmailImageCompatibility = testEmailImageCompatibility;
+}
+
 const emailService = { sendOrderEmail, sendOwnerNotification, sendCustomerConfirmation };
 export default emailService;
