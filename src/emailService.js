@@ -43,7 +43,6 @@ export const sendOwnerNotification = async (orderData) => {
       templateParams
     );
 
-    console.log('Owner notification sent successfully:', response);
     return response;
   } catch (error) {
     console.error('Error sending owner notification:', error);
@@ -58,10 +57,6 @@ export const sendOwnerNotification = async (orderData) => {
  */
 export const sendCustomerConfirmation = async (orderData) => {
   try {
-    console.log('Attempting to send customer confirmation email...');
-    console.log('Customer email:', orderData.customer.email);
-    console.log('Using template ID:', EMAILJS_CONFIG.customerTemplateId);
-    
     // Prepare template parameters for customer confirmation
     const templateParams = {
       order_id: orderData.orderId,
@@ -83,20 +78,9 @@ export const sendCustomerConfirmation = async (orderData) => {
           // Development: Use placeholder with product initials
           imageUrl = `https://via.placeholder.com/64x64/4CAF50/white?text=${encodeURIComponent(item.product.name.slice(0,2))}`;
         } else {
-          // Production: Try real images first, but use a guaranteed fallback
-          const imageName = item.product.image.split('/').pop();
-          const realImageUrl = `${window.location.origin}/Images/${imageName}`;
-          
-          // For email compatibility, let's use a more reliable placeholder service as fallback
-          // You can replace this with actual images once we verify the correct path
+          // Production: Use placeholder service for email compatibility
           imageUrl = `https://via.placeholder.com/64x64/2196F3/white?text=${encodeURIComponent(item.product.name.slice(0,2))}`;
-          
-          // TODO: Test if realImageUrl works, then switch back to: imageUrl = realImageUrl;
         }
-        
-        console.log('Product:', item.product.name);
-        console.log('Generated URL:', imageUrl);
-        console.log('Is localhost:', isLocalhost);
         
         return {
           name: `${item.product.name} (${item.colors.join(', ')})`,
@@ -113,8 +97,6 @@ export const sendCustomerConfirmation = async (orderData) => {
       }
     };
 
-    console.log('Template parameters:', templateParams);
-
     // Send email to customer
     const response = await emailjs.send(
       EMAILJS_CONFIG.serviceId,
@@ -122,11 +104,9 @@ export const sendCustomerConfirmation = async (orderData) => {
       templateParams
     );
 
-    console.log('Customer confirmation sent successfully:', response);
     return response;
   } catch (error) {
     console.error('Error sending customer confirmation:', error);
-    console.error('Error details:', error.text || error.message);
     throw error;
   }
 };
@@ -145,15 +125,11 @@ export const sendOrderEmail = async (orderData) => {
     ]);
 
     // Check results
-    if (ownerResult.status === 'fulfilled') {
-      console.log('Owner notification sent successfully');
-    } else {
+    if (ownerResult.status === 'rejected') {
       console.error('Owner notification failed:', ownerResult.reason);
     }
 
-    if (customerResult.status === 'fulfilled') {
-      console.log('Customer confirmation sent successfully');
-    } else {
+    if (customerResult.status === 'rejected') {
       console.error('Customer confirmation failed:', customerResult.reason);
     }
 
@@ -169,69 +145,4 @@ export const sendOrderEmail = async (orderData) => {
   }
 };
 
-/**
- * Test if product images are accessible
- */
-export const testImageUrls = () => {
-  console.log('=== IMAGE URL DEBUGGING ===');
-  console.log('Current origin:', window.location.origin);
-  console.log('Current hostname:', window.location.hostname);
-  console.log('Is localhost:', window.location.hostname === 'localhost');
-  
-  // Test a few sample products
-  const sampleProducts = [
-    { name: "Supermarket CartCoin", image: "./Images/SuperMarketCoin.jpg" },
-    { name: "Hamsa", image: "./Images/Hamsa.jpg" },
-    { name: "Heart KeyChain", image: "./Images/HeartKeyChain.jpg" }
-  ];
-  
-  sampleProducts.forEach(product => {
-    const imageName = product.image.split('/').pop();
-    const imageUrl = `${window.location.origin}/Images/${imageName}`;
-    const publicImageUrl = `${window.location.origin}/public/Images/${imageName}`;
-    
-    console.log(`\n--- ${product.name} ---`);
-    console.log(`Original path: ${product.image}`);
-    console.log(`Image name: ${imageName}`);
-    console.log(`URL 1: ${imageUrl}`);
-    console.log(`URL 2: ${publicImageUrl}`);
-    
-    // Test both URLs
-    [imageUrl, publicImageUrl].forEach((url, index) => {
-      const img = new Image();
-      img.onload = () => console.log(`✅ URL ${index + 1} loads successfully: ${url}`);
-      img.onerror = () => console.log(`❌ URL ${index + 1} failed to load: ${url}`);
-      img.src = url;
-    });
-  });
-};
-
-/**
- * Alternative: Use a more email-friendly image approach
- */
-export const testEmailImageCompatibility = async () => {
-  console.log('=== EMAIL IMAGE COMPATIBILITY TEST ===');
-  
-  // Test different image hosting approaches
-  const testUrls = [
-    `${window.location.origin}/Images/Hamsa.jpg`,
-    `${window.location.origin}/public/Images/Hamsa.jpg`,
-    'https://via.placeholder.com/64x64/f0f0f0/666?text=Test',
-    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=64&h=64&fit=crop' // Public CDN test
-  ];
-  
-  for (const url of testUrls) {
-    try {
-      const response = await fetch(url);
-      console.log(`${response.ok ? '✅' : '❌'} ${url} - Status: ${response.status}`);
-    } catch (error) {
-      console.log(`❌ ${url} - Error: ${error.message}`);
-    }
-  }
-};
-
-// Make test functions available globally
-if (typeof window !== 'undefined') {
-  window.testImageUrls = testImageUrls;
-  window.testEmailImageCompatibility = testEmailImageCompatibility;
-}
+export default { sendOrderEmail, sendOwnerNotification, sendCustomerConfirmation };
