@@ -148,10 +148,10 @@ function App() {
               <div className="color-square beige"></div>
               <span>Beige (Skin tone)</span>
             </div>
-            <div className="color-item">
+            {/* <div className="color-item">
               <div className="color-square red-blue"></div>
               <span>Red/Blue Mix</span>
-            </div>
+            </div> */}
             <div className="color-item">
               <div className="color-square yellow"></div>
               <span>Yellow</span>
@@ -171,6 +171,10 @@ function App() {
             <div className="color-item">
               <div className="color-square purple"></div>
               <span>Purple</span>
+            </div>
+            <div className="color-item">
+              <div className="color-square gray"></div>
+              <span>Gray</span>
             </div>
             <div className="color-item">
               <div className="color-square titanium-carbon"></div>

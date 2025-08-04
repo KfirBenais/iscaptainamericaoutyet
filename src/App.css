@@ -172,6 +172,7 @@
 .color-square.green { background-color: #27ae60; }
 .color-square.bronze { background-color: #cd7f32; }
 .color-square.purple { background-color: #9b59b6; }
+.color-square.gray { background-color: #808080; }
 .color-square.titanium-carbon { 
   background: linear-gradient(45deg, #5a6572, #414a56);
   position: relative;
