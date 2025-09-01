@@ -14,14 +14,16 @@ function App() {
   const [productToAdd, setProductToAdd] = useState(null);
 
   const products = [
+    { name: "Phone Stand", price: 20, image: "./Images/PhoneStand.png", category: "Utilities" },
+    { name: "Spilling Glass", price: 25, image: "./Images/SpillingGlass.png", category: "Decorative" },
     { name: "Supermarket CartCoin", price: 5, image: "./Images/SuperMarketCoin.jpg", category: "Utilities" },
     { name: "Hamsa", price: 5, image: "./Images/Hamsa.jpg", category: "Decorative" },
-    { name: "Heart KeyChain", price: 5, image: "./Images/HeartKeyChain.jpg", category: "Decorative" },
+    { name: "Heart KeyChain", price: 8, image: "./Images/HeartKeyChain.jpg", category: "Decorative" },
      { name: "Custom Photo Frame", price: 20, image: "./Images/CustomPhotoFrame.jpg", category: "Decorative" },
     { name: "Gear Rhombo", price: 15, image: "./Images/Gear Rhombo.webp", category: "Fidgets" },
     { name: "Casino chips", price: 15, image: "./Images/Casino chips.webp", category: "Fidgets" },
     { name: "Spinner", price: 15, image: "./Images/spinner.webp", category: "Fidgets" },
-    { name: "Infinity cubes", price: 15, image: "./Images/Infinity cubes.webp", category: "Fidgets" },
+    { name: "Infinity cubes", price: 20, image: "./Images/Infinity cubes.webp", category: "Fidgets" },
     { name: "Gearbox", price: 10, image: "./Images/GearBox.webp", category: "Fidgets" },
     { name: "Nasa Fabric", price: 20, image: "./Images/NasaFabric.jpeg", category: "Fidgets" },
     { name: "ForeverSpin spinning top", price: 10, image: "./Images/spinning top.webp", category: "Toys" },
@@ -49,6 +51,7 @@ function App() {
     { name: "Switch 2 Mouse Adapter", price: 30, image: "./Images/Switch2MouseAdapter.jpg", category: "Utilities" },
     { name: "Pen Holder - Desk Organizer", price: 30, image: "./Images/PenHolder.jpg", category: "Utilities" },
     { name: "Mosquito Net Dual-Sided Tool", price: 10, image: "./Images/MosquitoNetTool.webp", category: "Utilities" },
+    
   ];
 
   // Get unique categories
