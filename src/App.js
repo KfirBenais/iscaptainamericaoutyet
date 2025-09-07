@@ -180,10 +180,6 @@ function App() {
               <span>Gray</span>
             </div>
             <div className="color-item">
-              <div className="color-square titanium-carbon"></div>
-              <span>Titanium Gray Carbon Fiber</span>
-            </div>
-            <div className="color-item">
               <div className="color-square green-red-darkblue"></div>
               <span>Green/Red/Blue Mix</span>
             </div>

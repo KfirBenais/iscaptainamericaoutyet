@@ -6,9 +6,8 @@ const AddToCartModal = ({ product, onAdd, onClose }) => {
   const [notes, setNotes] = useState('');
 
   const availableColors = [
-    'White', 'Black', 'Rainbow', 'Red', 'Blue', 'Beige', 
-    'Red/Blue Mix', 'Yellow', 'Transparent', 'Green', 
-    'Bronze', 'Purple', 'Titanium Gray Carbon Fiber', 'Green/Red/Blue Mix'
+    'White', 'Black', 'Rainbow (Surprise!)', 'Red', 'Blue', 'Beige (Skin tone)', 
+    'Yellow', 'Transparent', 'Green', 'Bronze', 'Purple', 'Gray', 'Green/Red/Blue Mix'
   ];
 
   const toggleColor = (color) => {
