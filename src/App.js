@@ -16,6 +16,7 @@ function App() {
   const products = [
     { name: "Phone Stand", price: 20, image: "./Images/PhoneStand.png", category: "Utilities" },
     { name: "Spilling Glass", price: 25, image: "./Images/SpillingGlass.png", category: "Decorative" },
+    { name: "Knitted Heart Flower", price: 25, image: "./Images/KnittedHeartFlower.png", category: "Decorative" },
     { name: "Supermarket CartCoin", price: 5, image: "./Images/SuperMarketCoin.jpg", category: "Utilities" },
     { name: "Hamsa", price: 5, image: "./Images/Hamsa.jpg", category: "Decorative" },
     { name: "Heart KeyChain", price: 8, image: "./Images/HeartKeyChain.jpg", category: "Decorative" },
