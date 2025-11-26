@@ -25,6 +25,7 @@ function App() {
     { name: "Casino chips", price: 15, image: "./Images/Casino chips.webp", category: "Fidgets" },
     { name: "Spinner", price: 15, image: "./Images/spinner.webp", category: "Fidgets" },
     { name: "Infinity cubes", price: 20, image: "./Images/Infinity cubes.webp", category: "Fidgets" },
+    { name: "Fidget Collection", price: 15, image: "./Images/FidgetCollection.webp", category: "Fidgets" },
     { name: "Gearbox", price: 10, image: "./Images/GearBox.webp", category: "Fidgets" },
     { name: "Nasa Fabric", price: 20, image: "./Images/NasaFabric.jpeg", category: "Fidgets" },
     { name: "ForeverSpin spinning top", price: 10, image: "./Images/spinning top.webp", category: "Toys" },
