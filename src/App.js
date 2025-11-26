@@ -14,6 +14,9 @@ function App() {
   const [productToAdd, setProductToAdd] = useState(null);
 
   const products = [
+    { name: "Flexi Crab", price: 8, image: "./Images/FlexiCrab.jpg", category: "Toys" },
+    { name: "Flexi Penguin", price: 8, image: "./Images/FlexiPenguin.jpg", category: "Toys" },
+    { name: "Fidget Collection", price: 15, image: "./Images/FidgetCollection.webp", category: "Fidgets" },
     { name: "Phone Stand", price: 20, image: "./Images/PhoneStand.png", category: "Utilities" },
     { name: "Spilling Glass", price: 25, image: "./Images/SpillingGlass.png", category: "Decorative" },
     { name: "Knitted Heart Flower", price: 25, image: "./Images/KnittedHeartFlower.png", category: "Decorative" },
@@ -25,7 +28,6 @@ function App() {
     { name: "Casino chips", price: 15, image: "./Images/Casino chips.webp", category: "Fidgets" },
     { name: "Spinner", price: 15, image: "./Images/spinner.webp", category: "Fidgets" },
     { name: "Infinity cubes", price: 20, image: "./Images/Infinity cubes.webp", category: "Fidgets" },
-    { name: "Fidget Collection", price: 15, image: "./Images/FidgetCollection.webp", category: "Fidgets" },
     { name: "Gearbox", price: 10, image: "./Images/GearBox.webp", category: "Fidgets" },
     { name: "Nasa Fabric", price: 20, image: "./Images/NasaFabric.jpeg", category: "Fidgets" },
     { name: "ForeverSpin spinning top", price: 10, image: "./Images/spinning top.webp", category: "Toys" },
