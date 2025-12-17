@@ -14,8 +14,10 @@ function App() {
   const [productToAdd, setProductToAdd] = useState(null);
 
   const products = [
-    { name: "Flexi Crab", price: 8, image: "./Images/FlexiCrab.jpg", category: "Toys" },
-    { name: "Flexi Penguin", price: 8, image: "./Images/FlexiPenguin.jpg", category: "Toys" },
+    { name: "Soda Can Opener", price: 8, image: "./Images/CanOpener.jpeg", category: "Utilities" },
+    { name: "Birth Present", price: 30, image: "./Images/BirthPresent.webp", category: "Decorative" },
+    { name: "Flexi Crab", price: 10, image: "./Images/FlexiCrab.jpg", category: "Toys" },
+    { name: "Flexi Penguin", price: 10, image: "./Images/FlexiPenguin.jpg", category: "Toys" },
     { name: "Fidget Collection", price: 15, image: "./Images/FidgetCollection.webp", category: "Fidgets" },
     { name: "Phone Stand", price: 20, image: "./Images/PhoneStand.png", category: "Utilities" },
     { name: "Spilling Glass", price: 25, image: "./Images/SpillingGlass.png", category: "Decorative" },
