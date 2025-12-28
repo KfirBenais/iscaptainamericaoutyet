@@ -19,6 +19,7 @@ function App() {
     { name: "Bag Clips", price: 3, image: "./Images/BagClips.jpg", category: "Utilities" },
     { name: "Bag Clips With Lid", price: 5, image: "./Images/BagClipsLid.jpeg", category: "Utilities" },
     { name: "Bunny Vortex", price: 15, image: "./Images/BunnyVortex.webp", category: "Fidgets" },
+    { name: "Morf Worm", price: 15, image: "./Images/MorfWorm.webp", category: "Fidgets" },
     { name: "Flexi Crab", price: 10, image: "./Images/FlexiCrab.jpg", category: "Toys" },
     { name: "Flexi Penguin", price: 10, image: "./Images/FlexiPenguin.jpg", category: "Toys" },
     { name: "Fidget Collection", price: 15, image: "./Images/FidgetCollection.webp", category: "Fidgets" },
