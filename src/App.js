@@ -1,8 +1,36 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import AddToCartModal from './AddToCartModal';
 import Cart from './Cart';
 import Checkout from './Checkout';
+import {
+  LanguageContext,
+  translations,
+  getDefaultLanguage,
+  getTranslationValue,
+  getCategoryLabel,
+  getColorLabel
+} from './i18n';
+
+const colorPalette = [
+  { name: 'White', className: 'white' },
+  { name: 'Black', className: 'black' },
+  { name: 'Rainbow (Surprise!)', className: 'rainbow' },
+  { name: 'Red', className: 'red' },
+  { name: 'Blue', className: 'blue' },
+  { name: 'Beige (Skin tone)', className: 'beige' },
+  { name: 'Yellow', className: 'yellow' },
+  { name: 'Transparent', className: 'transparent' },
+  { name: 'Green', className: 'green' },
+  { name: 'Bronze', className: 'bronze' },
+  { name: 'Purple', className: 'purple' },
+  { name: 'Gray', className: 'gray' },
+  { name: 'Green/Red/Blue Mix', className: 'green-red-darkblue' },
+  { name: 'White Marble', className: 'white-marble' },
+  { name: 'Glow Glitter Green', className: 'glow-glitter-green' },
+  { name: 'Galaxy', className: 'galaxy' },
+  { name: 'Orange TPU', className: 'orange-tpu' }
+];
 
 function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -12,8 +40,37 @@ function App() {
   const [showCheckout, setShowCheckout] = useState(false);
   const [showAddToCart, setShowAddToCart] = useState(false);
   const [productToAdd, setProductToAdd] = useState(null);
+  const [language, setLanguage] = useState(getDefaultLanguage());
+
+  const dictionary = useMemo(() => translations[language], [language]);
+  const t = useCallback((key) => {
+    return getTranslationValue(dictionary, key) ?? key;
+  }, [dictionary]);
+  const isHebrew = language === 'he';
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = language;
+      document.documentElement.dir = isHebrew ? 'rtl' : 'ltr';
+    }
+  }, [language, isHebrew]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        window.localStorage?.setItem('preferredLanguage', language);
+      } catch (err) {
+        // Ignore storage issues silently
+      }
+    }
+  }, [language]);
 
   const products = [
+    { name: "Eevee", price: 30, image: "./Images/Eevee.jpeg", category: "Figurines" },
+    { name: "Banana Holder", price: 10, image: "./Images/BananaHolder.jpeg", category: "Utilities" },
+    { name: "Snow Castle With Trees", price: 25, image: "./Images/ChurchCastle.jpeg", category: "Figurines" },
+    { name: "Beyblade arena", price: 20, image: "./Images/Beyblade_arena.jpeg", category: "Toys" },
+    { name: "Glasses Box", price: 25, image: "./Images/GlassesBox.jpeg", category: "Utilities" },
     { name: "Soda Can Opener", price: 8, image: "./Images/CanOpener.jpeg", category: "Utilities" },
     { name: "Birth Present", price: 30, image: "./Images/BirthPresent.webp", category: "Decorative" },
     { name: "Bag Clips", price: 3, image: "./Images/BagClips.jpg", category: "Utilities" },
@@ -109,13 +166,26 @@ function App() {
     setSelectedProduct(null);
   };
 
+  const toggleLanguage = () => {
+    setLanguage((prev) => (prev === 'en' ? 'he' : 'en'));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
+    <LanguageContext.Provider value={{ language, t, dictionary }}>
+      <div className={`App ${isHebrew ? 'rtl' : ''}`} dir={isHebrew ? 'rtl' : 'ltr'}>
+        <button
+          className="language-toggle"
+          onClick={toggleLanguage}
+          aria-label={t('languageToggle.ariaLabel')}
+        >
+          <span className="language-icon">🌐</span>
+          <span className="language-label">{language === 'en' ? 'עברית' : 'English'}</span>
+        </button>
+        <header className="App-header">
         <div className="header-content">
           <div className="header-title">
-            <h1 className="main-title">🎯 Benais 3D Prints Catalog</h1>
-            <p className="subtitle">Quality 3D Printed Products at Great Prices</p>
+            <h1 className="main-title">{t('header.title')}</h1>
+            <p className="subtitle">{t('header.subtitle')}</p>
           </div>
           <div className="cart-icon-container" onClick={() => setShowCart(true)}>
             <div className="cart-icon">🛒</div>
@@ -128,78 +198,27 @@ function App() {
       
       <section className="color-info-section">
         <div className="color-info-container">
-          <h2 className="color-info-title">🎨 Color Options</h2>
+          <h2 className="color-info-title">{t('colorSection.title')}</h2>
           <p className="color-notice">
-            All prints can be made in any of our available colors. 
-            Combinations of more than 2 colors may incur additional material costs.
+            {t('colorSection.description')}
             <br />
-            <strong>Colors are updated in real-time - some colors may be temporarily out of stock.</strong>
+            <strong>{t('colorSection.realtimeNotice')}</strong>
           </p>
           
           <div className="colors-grid">
-            <div className="color-item">
-              <div className="color-square white"></div>
-              <span>White</span>
-            </div>
-            <div className="color-item">
-              <div className="color-square black"></div>
-              <span>Black</span>
-            </div>
-            <div className="color-item">
-              <div className="color-square rainbow"></div>
-              <span>Rainbow (Surprise!)</span>
-            </div>
-            <div className="color-item">
-              <div className="color-square red"></div>
-              <span>Red</span>
-            </div>
-            <div className="color-item">
-              <div className="color-square blue"></div>
-              <span>Blue</span>
-            </div>
-            <div className="color-item">
-              <div className="color-square beige"></div>
-              <span>Beige (Skin tone)</span>
-            </div>
-            {/* <div className="color-item">
-              <div className="color-square red-blue"></div>
-              <span>Red/Blue Mix</span>
-            </div> */}
-            <div className="color-item">
-              <div className="color-square yellow"></div>
-              <span>Yellow</span>
-            </div>
-            <div className="color-item">
-              <div className="color-square transparent"></div>
-              <span>Transparent</span>
-            </div>
-            <div className="color-item">
-              <div className="color-square green"></div>
-              <span>Green</span>
-            </div>
-            <div className="color-item">
-              <div className="color-square bronze"></div>
-              <span>Bronze</span>
-            </div>
-            <div className="color-item">
-              <div className="color-square purple"></div>
-              <span>Purple</span>
-            </div>
-            <div className="color-item">
-              <div className="color-square gray"></div>
-              <span>Gray</span>
-            </div>
-            <div className="color-item">
-              <div className="color-square green-red-darkblue"></div>
-              <span>Green/Red/Blue Mix</span>
-            </div>
+            {colorPalette.map((color) => (
+              <div className="color-item" key={color.name}>
+                <div className={`color-square ${color.className}`}></div>
+                <span>{getColorLabel(color.name, language)}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
       
       <section className="category-filter-section">
         <div className="category-filter-container">
-          <h3 className="category-filter-title">📂 Browse by Category</h3>
+          <h3 className="category-filter-title">{t('categories.title')}</h3>
           <div className="category-buttons">
             {categories.map(category => (
               <button
@@ -207,7 +226,7 @@ function App() {
                 className={`category-btn ${selectedCategory === category ? 'active' : ''}`}
                 onClick={() => setSelectedCategory(category)}
               >
-                {category}
+                {getCategoryLabel(category, language)}
                 <span className="category-count">
                   ({category === 'All' ? products.length : products.filter(p => p.category === category).length})
                 </span>
@@ -220,8 +239,8 @@ function App() {
       <main className="products-section">
         <div className="products-header">
           <h2 className="products-title">
-            {selectedCategory === 'All' ? 'All Products' : selectedCategory} 
-            <span className="products-count">({filteredProducts.length} items)</span>
+            {selectedCategory === 'All' ? t('products.all') : getCategoryLabel(selectedCategory, language)} 
+            <span className="products-count">({filteredProducts.length} {t('products.countLabel')})</span>
           </h2>
         </div>
         <div className="products-grid">
@@ -254,7 +273,7 @@ function App() {
                     handleAddToCartClick(product);
                   }}
                 >
-                  Add to Cart
+                  {t('buttons.addToCart')}
                 </button>
               </div>
             </div>
@@ -263,7 +282,7 @@ function App() {
       </main>
       
       <footer className="App-footer">
-        <p><strong>benais3dprints</strong> - Contact us for custom 3D printing requests!</p>
+        <p><strong>benais3dprints</strong> - {t('footer.text')}</p>
       </footer>
 
       {/* Modal */}
@@ -304,7 +323,7 @@ function App() {
                 className="add-to-cart-btn"
                 onClick={() => handleAddToCartClick(selectedProduct)}
               >
-                Add to Cart
+                {t('buttons.addToCart')}
               </button>
             </div>
           </div>
@@ -345,11 +364,12 @@ function App() {
           onOrderComplete={() => {
             setCart([]);
             setShowCheckout(false);
-            alert('Order placed successfully! You will receive a confirmation email shortly.');
+            alert(t('alerts.orderSuccess'));
           }}
         />
       )}
-    </div>
+      </div>
+    </LanguageContext.Provider>
   );
 }
 

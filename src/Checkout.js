@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { sendOrderEmail } from './emailService';
+import { useLanguage, getColorLabel } from './i18n';
 
 const Checkout = ({ cart, onClose, onOrderComplete }) => {
+  const { language, t, dictionary } = useLanguage();
   const [customerData, setCustomerData] = useState({
     name: '',
     email: '',
     phone: ''
   });
   const [showPaymentQR, setShowPaymentQR] = useState(false);
+  const paymentSteps = dictionary?.checkout?.payment?.steps ?? [];
 
   const getCartTotal = () => {
     return cart.reduce((total, item) => total + item.totalPrice, 0);
@@ -23,7 +26,7 @@ const Checkout = ({ cart, onClose, onOrderComplete }) => {
 
   const handleSubmitOrder = async () => {
     if (!isFormValid()) {
-      alert('Please fill in all required fields');
+      alert(t('alerts.checkoutMissingFields'));
       return;
     }
 
@@ -63,15 +66,15 @@ const Checkout = ({ cart, onClose, onOrderComplete }) => {
     return (
       <div className="modal-overlay">
         <div className="payment-modal">
-          <h2>Complete Your Payment</h2>
+          <h2>{t('checkout.payment.title')}</h2>
           <div className="payment-info">
-            <p><strong>Order ID:</strong> ORD-{Date.now()}</p>
-            <p><strong>Total Amount:</strong> {getCartTotal()} ₪</p>
+            <p><strong>{t('checkout.payment.orderId')}:</strong> ORD-{Date.now()}</p>
+            <p><strong>{t('checkout.payment.totalAmount')}:</strong> {getCartTotal()} ₪</p>
           </div>
           
           <div className="qr-code-section">
             <div className="qr-code-placeholder">
-              <p>📱 QR Code for Payment</p>
+              <p>{t('checkout.payment.qrPlaceholder')}</p>
               <div className="qr-code">
                 <img 
                   src="./Images/BitQrCode.jpeg" 
@@ -83,30 +86,29 @@ const Checkout = ({ cart, onClose, onOrderComplete }) => {
                   }}
                 />
                 <div className="qr-code-fallback" style={{display: 'none'}}>
-                  <p>QR Code temporarily unavailable</p>
-                  <p>Please contact us for payment instructions</p>
+                  <p>{t('checkout.payment.qrUnavailable')}</p>
+                  <p>{t('checkout.payment.qrContact')}</p>
                 </div>
               </div>
-              <p>Scan with your BIT app to pay {getCartTotal()} ₪</p>
+              <p>{t('checkout.payment.scanInstructionPrefix')} {getCartTotal()} ₪</p>
             </div>
           </div>
           
           <div className="payment-instructions">
-            <h4>Payment Instructions:</h4>
+            <h4>{t('checkout.payment.instructionsTitle')}</h4>
             <ol>
-              <li>Open your BIT app</li>
-              <li>Scan the QR code above</li>
-              <li>Confirm the payment amount</li>
-              <li>Complete the transaction</li>
+              {paymentSteps.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
             </ol>
           </div>
           
           <div className="payment-actions">
             <button className="payment-complete-btn" onClick={handlePaymentComplete}>
-              ✅ Payment Completed
+              {t('buttons.paymentDone')}
             </button>
             <button className="payment-cancel-btn" onClick={() => setShowPaymentQR(false)}>
-              Cancel
+              {t('buttons.paymentCancel')}
             </button>
           </div>
         </div>
@@ -118,48 +120,48 @@ const Checkout = ({ cart, onClose, onOrderComplete }) => {
     <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div className="checkout-modal">
         <button className="modal-close" onClick={onClose}>✕</button>
-        <h2>Checkout</h2>
+        <h2>{t('checkout.title')}</h2>
         
         <div className="checkout-content">
           <div className="customer-form">
-            <h3>Your Information</h3>
+            <h3>{t('checkout.customerInfoTitle')}</h3>
             
             <div className="form-group">
-              <label>Full Name *</label>
+              <label>{t('checkout.fields.name.label')}</label>
               <input
                 type="text"
                 value={customerData.name}
                 onChange={(e) => handleInputChange('name', e.target.value)}
-                placeholder="Enter your full name"
+                placeholder={t('checkout.fields.name.placeholder')}
                 required
               />
             </div>
             
             <div className="form-group">
-              <label>Email Address *</label>
+              <label>{t('checkout.fields.email.label')}</label>
               <input
                 type="email"
                 value={customerData.email}
                 onChange={(e) => handleInputChange('email', e.target.value)}
-                placeholder="Enter your email"
+                placeholder={t('checkout.fields.email.placeholder')}
                 required
               />
             </div>
             
             <div className="form-group">
-              <label>Phone Number *</label>
+              <label>{t('checkout.fields.phone.label')}</label>
               <input
                 type="tel"
                 value={customerData.phone}
                 onChange={(e) => handleInputChange('phone', e.target.value)}
-                placeholder="Enter your phone number"
+                placeholder={t('checkout.fields.phone.placeholder')}
                 required
               />
             </div>
           </div>
           
           <div className="order-summary">
-            <h3>Order Summary</h3>
+            <h3>{t('checkout.orderSummaryTitle')}</h3>
             
             <div className="summary-items">
               {cart.map(item => (
@@ -167,10 +169,10 @@ const Checkout = ({ cart, onClose, onOrderComplete }) => {
                   <div className="summary-item-info">
                     <span className="item-name">{item.product.name}</span>
                     <span className="item-details">
-                      Qty: {item.quantity} | Colors: {item.colors.join(', ')}
+                      {t('checkout.quantityLabel')}: {item.quantity} | {t('checkout.colorsLabel')}: {item.colors.map(color => getColorLabel(color, language)).join(', ')}
                     </span>
                     {item.notes && (
-                      <span className="item-notes">Notes: {item.notes}</span>
+                      <span className="item-notes">{t('checkout.notesLabel')}: {item.notes}</span>
                     )}
                   </div>
                   <span className="item-total">{item.totalPrice} ₪</span>
@@ -179,21 +181,21 @@ const Checkout = ({ cart, onClose, onOrderComplete }) => {
             </div>
             
             <div className="summary-total">
-              <strong>Total: {getCartTotal()} ₪</strong>
+              <strong>{t('checkout.total')}: {getCartTotal()} ₪</strong>
             </div>
           </div>
         </div>
         
         <div className="checkout-footer">
           <button className="back-to-cart-btn" onClick={onClose}>
-            Back to Cart
+            {t('buttons.backToCart')}
           </button>
           <button 
             className={`submit-order-btn ${!isFormValid() ? 'disabled' : ''}`}
             onClick={handleSubmitOrder}
             disabled={!isFormValid()}
           >
-            Place Order
+            {t('buttons.placeOrder')}
           </button>
         </div>
       </div>

@@ -1,6 +1,8 @@
 import React from 'react';
+import { useLanguage, getColorLabel } from './i18n';
 
 const Cart = ({ cart, onClose, onRemove, onUpdateQuantity, onCheckout }) => {
+  const { language, t } = useLanguage();
   const getCartTotal = () => {
     return cart.reduce((total, item) => total + item.totalPrice, 0);
   };
@@ -10,11 +12,11 @@ const Cart = ({ cart, onClose, onRemove, onUpdateQuantity, onCheckout }) => {
       <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
         <div className="cart-modal">
           <button className="modal-close" onClick={onClose}>✕</button>
-          <h2>Your Cart</h2>
+          <h2>{t('cart.title')}</h2>
           <div className="empty-cart">
-            <p>🛒 Your cart is empty</p>
+            <p>{t('cart.empty')}</p>
             <button className="continue-shopping" onClick={onClose}>
-              Continue Shopping
+              {t('buttons.continueShopping')}
             </button>
           </div>
         </div>
@@ -26,7 +28,9 @@ const Cart = ({ cart, onClose, onRemove, onUpdateQuantity, onCheckout }) => {
     <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div className="cart-modal">
         <button className="modal-close" onClick={onClose}>✕</button>
-        <h2>Your Cart ({cart.length} items)</h2>
+        <h2>
+          {t('cart.title')} ({cart.length} {cart.length === 1 ? t('cart.itemLabelSingular') : t('cart.itemLabelPlural')})
+        </h2>
         
         <div className="cart-items">
           {cart.map(item => (
@@ -35,22 +39,22 @@ const Cart = ({ cart, onClose, onRemove, onUpdateQuantity, onCheckout }) => {
               
               <div className="cart-item-details">
                 <h4>{item.product.name}</h4>
-                <p className="cart-item-price">{item.product.price} ₪ each</p>
+                <p className="cart-item-price">{item.product.price} ₪ {t('cart.each')}</p>
                 
                 <div className="cart-item-colors">
-                  <strong>Colors: </strong>
-                  {item.colors.join(', ')}
+                  <strong>{t('cart.colors')}: </strong>
+                  {item.colors.map(color => getColorLabel(color, language)).join(', ')}
                 </div>
                 
                 {item.notes && (
                   <div className="cart-item-notes">
-                    <strong>Notes: </strong>
+                    <strong>{t('cart.notes')}: </strong>
                     {item.notes}
                   </div>
                 )}
                 
                 <div className="cart-item-quantity">
-                  <label>Quantity: </label>
+                  <label>{t('cart.quantity')}: </label>
                   <div className="quantity-controls">
                     <button onClick={() => onUpdateQuantity(item.id, Math.max(1, item.quantity - 1))}>
                       -
@@ -63,7 +67,7 @@ const Cart = ({ cart, onClose, onRemove, onUpdateQuantity, onCheckout }) => {
                 </div>
                 
                 <div className="cart-item-total">
-                  <strong>Subtotal: {item.totalPrice} ₪</strong>
+                  <strong>{t('cart.subtotal')}: {item.totalPrice} ₪</strong>
                 </div>
               </div>
               
@@ -79,15 +83,15 @@ const Cart = ({ cart, onClose, onRemove, onUpdateQuantity, onCheckout }) => {
         
         <div className="cart-footer">
           <div className="cart-total">
-            <h3>Total: {getCartTotal()} ₪</h3>
+            <h3>{t('cart.total')}: {getCartTotal()} ₪</h3>
           </div>
           
           <div className="cart-actions">
             <button className="continue-shopping" onClick={onClose}>
-              Continue Shopping
+              {t('buttons.continueShopping')}
             </button>
             <button className="checkout-btn" onClick={onCheckout}>
-              Proceed to Checkout
+              {t('buttons.proceedToCheckout')}
             </button>
           </div>
         </div>

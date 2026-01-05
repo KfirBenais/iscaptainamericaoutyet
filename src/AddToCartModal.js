@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
+import { useLanguage, getColorLabel } from './i18n';
 
 const AddToCartModal = ({ product, onAdd, onClose }) => {
   const [quantity, setQuantity] = useState(1);
   const [selectedColors, setSelectedColors] = useState([]);
   const [notes, setNotes] = useState('');
+  const { language, t } = useLanguage();
 
   const availableColors = [
     'White', 'Black', 'Rainbow (Surprise!)', 'Red', 'Blue', 'Beige (Skin tone)', 
-    'Yellow', 'Transparent', 'Green', 'Bronze', 'Purple', 'Gray', 'Green/Red/Blue Mix'
+    'Yellow', 'Transparent', 'Green', 'Bronze', 'Purple', 'Gray', 'Green/Red/Blue Mix',
+    'White Marble', 'Glow Glitter Green', 'Galaxy', 'Orange TPU'
   ];
 
   const toggleColor = (color) => {
@@ -20,7 +23,7 @@ const AddToCartModal = ({ product, onAdd, onClose }) => {
 
   const handleSubmit = () => {
     if (selectedColors.length === 0) {
-      alert('Please select at least one color');
+      alert(t('addToCart.selectColorAlert'));
       return;
     }
     onAdd(product, quantity, selectedColors, notes);
@@ -35,13 +38,13 @@ const AddToCartModal = ({ product, onAdd, onClose }) => {
           <img src={product.image} alt={product.name} className="add-to-cart-image" />
           <div className="add-to-cart-info">
             <h3>{product.name}</h3>
-            <p className="price">{product.price} ₪ each</p>
+            <p className="price">{product.price} ₪ {t('addToCart.priceEachSuffix')}</p>
           </div>
         </div>
 
         <div className="add-to-cart-body">
           <div className="quantity-section">
-            <label>Quantity:</label>
+            <label>{t('addToCart.quantity')}</label>
             <div className="quantity-controls">
               <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>
               <span>{quantity}</span>
@@ -50,7 +53,7 @@ const AddToCartModal = ({ product, onAdd, onClose }) => {
           </div>
 
           <div className="color-section">
-            <label>Select Colors:</label>
+            <label>{t('addToCart.selectColors')}</label>
             <div className="color-grid">
               {availableColors.map(color => (
                 <div 
@@ -58,28 +61,28 @@ const AddToCartModal = ({ product, onAdd, onClose }) => {
                   className={`color-option ${selectedColors.includes(color) ? 'selected' : ''}`}
                   onClick={() => toggleColor(color)}
                 >
-                  {color}
+                  {getColorLabel(color, language)}
                 </div>
               ))}
             </div>
           </div>
 
           <div className="notes-section">
-            <label>Special Notes (color settings, preferences, etc.):</label>
+            <label>{t('addToCart.notesLabel')}</label>
             <textarea 
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Add any special instructions about colors, size preferences, or other customizations..."
+              placeholder={t('addToCart.notesPlaceholder')}
               rows={4}
             />
           </div>
 
           <div className="total-section">
-            <p className="total">Total: {(product.price * quantity).toFixed(0)} ₪</p>
+            <p className="total">{t('addToCart.total')} {(product.price * quantity).toFixed(0)} ₪</p>
           </div>
 
           <button className="add-to-cart-submit" onClick={handleSubmit}>
-            Add to Cart
+            {t('buttons.addToCart')}
           </button>
         </div>
       </div>
