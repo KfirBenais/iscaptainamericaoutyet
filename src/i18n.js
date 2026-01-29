@@ -216,7 +216,9 @@ export const colorLabels = {
     'White Marble': 'White Marble',
     'Glow Glitter Green': 'Glow Glitter Green',
     'Galaxy': 'Galaxy',
-    'Orange TPU': 'Orange TPU'
+    'Orange TPU': 'Orange TPU',
+    'Black TPU': 'Black TPU',
+    'WOOD': 'wood'
   },
   he: {
     'White': 'לבן',
@@ -235,7 +237,9 @@ export const colorLabels = {
     'White Marble': 'שיש לבן',
     'Glow Glitter Green': 'ירוק זוהר מנצנץ',
     'Galaxy': 'גלקסי',
-    'Orange TPU': 'TPU כתום'
+    'Orange TPU': 'TPU כתום',
+    'Black TPU': 'TPU שחור',
+    'WOOD': 'עץ'
   }
 };
 

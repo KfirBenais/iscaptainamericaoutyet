@@ -29,7 +29,9 @@ const colorPalette = [
   { name: 'White Marble', className: 'white-marble' },
   { name: 'Glow Glitter Green', className: 'glow-glitter-green' },
   { name: 'Galaxy', className: 'galaxy' },
-  { name: 'Orange TPU', className: 'orange-tpu' }
+  { name: 'Orange TPU', className: 'orange-tpu' },
+  { name: 'Black TPU', className: 'black-tpu' },
+  { name: 'WOOD', className: 'wood' }
 ];
 
 function App() {
@@ -66,6 +68,10 @@ function App() {
   }, [language]);
 
   const products = [
+    { name: "Groot Planter", price: 20, image: "./Images/GrootPlanter.jpeg", category: "Figurines" },
+    { name: "Cocker Spaniel", price: 30, image: "./Images/CockerSpaniel.jpeg", category: "Figurines" },
+     { name: "Flexi T-REX", price: 10, image: "./Images/FlexiT-REX.jpeg", category: "Toys" },
+    { name: "Demogorgon", price: 20, image: "./Images/Demogorgon.jpeg", category: "Figurines" },
     { name: "Eevee", price: 30, image: "./Images/Eevee.jpeg", category: "Figurines" },
     { name: "Banana Holder", price: 10, image: "./Images/BananaHolder.jpeg", category: "Utilities" },
     { name: "Snow Castle With Trees", price: 25, image: "./Images/ChurchCastle.jpeg", category: "Figurines" },

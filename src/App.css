@@ -272,6 +272,19 @@
 .color-square.orange-tpu {
   background: linear-gradient(135deg, #ff9800, #ffb74d);
 }
+.color-square.black-tpu {
+  background: linear-gradient(135deg, #0a0a0a, #2b2b2b);
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.08);
+}
+.color-square.wood {
+  background-color: #b47d4e;
+  background-image:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0%, rgba(0, 0, 0, 0.08) 50%, transparent 50%),
+    repeating-linear-gradient(25deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.06) 6px, rgba(0, 0, 0, 0.08) 6px, rgba(0, 0, 0, 0.08) 12px),
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.15) 0%, transparent 25%),
+    radial-gradient(circle at 70% 60%, rgba(0, 0, 0, 0.15) 0%, transparent 25%);
+  background-blend-mode: overlay;
+}
 
 /* Add to Cart Modal */
 .add-to-cart-modal {
@@ -976,7 +989,7 @@
 }
 
 .product-image-container {
-  height: 250px;
+  height: 370px;
   background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
   display: flex;
   align-items: center;
