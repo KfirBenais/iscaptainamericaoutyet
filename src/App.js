@@ -18,6 +18,7 @@ const colorPalette = [
   { name: 'Rainbow (Surprise!)', className: 'rainbow' },
   { name: 'Red', className: 'red' },
   { name: 'Blue', className: 'blue' },
+  { name: 'Baby Blue', className: 'baby-blue' },
   { name: 'Beige (Skin tone)', className: 'beige' },
   { name: 'Yellow', className: 'yellow' },
   { name: 'Transparent', className: 'transparent' },
@@ -31,6 +32,7 @@ const colorPalette = [
   { name: 'Galaxy', className: 'galaxy' },
   { name: 'Orange TPU', className: 'orange-tpu' },
   { name: 'Black TPU', className: 'black-tpu' },
+  { name: 'Maple Wood', className: 'maple-wood' },
   { name: 'WOOD', className: 'wood' }
 ];
 
@@ -67,7 +69,9 @@ function App() {
     }
   }, [language]);
 
-  const products = [
+  const products = [  
+    { name: "Pikachu Spiderman", price: 30, image: "./Images/PikachuSpiderman.jpeg", category: "Figurines" },
+    { name: "Oreo Grinder", price: 15, image: "./Images/OreoGrinder.jpeg", category: "Utilities" },
     { name: "Groot Planter", price: 20, image: "./Images/GrootPlanter.jpeg", category: "Figurines" },
     { name: "Cocker Spaniel", price: 30, image: "./Images/CockerSpaniel.jpeg", category: "Figurines" },
      { name: "Flexi T-REX", price: 10, image: "./Images/FlexiT-REX.jpeg", category: "Toys" },

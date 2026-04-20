@@ -10,6 +10,7 @@ const Checkout = ({ cart, onClose, onOrderComplete }) => {
     phone: ''
   });
   const [showPaymentQR, setShowPaymentQR] = useState(false);
+  const [errors, setErrors] = useState({});
   const paymentSteps = dictionary?.checkout?.payment?.steps ?? [];
 
   const getCartTotal = () => {
@@ -18,18 +19,46 @@ const Checkout = ({ cart, onClose, onOrderComplete }) => {
 
   const handleInputChange = (field, value) => {
     setCustomerData({ ...customerData, [field]: value });
+    if (errors[field]) {
+      setErrors({ ...errors, [field]: undefined });
+    }
+  };
+
+  const isValidEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const isValidPhone = (phone) => {
+    const digits = phone.replace(/[\s\-().+]/g, '');
+    return /^\d{7,15}$/.test(digits);
   };
 
   const isFormValid = () => {
-    return customerData.name.trim() && customerData.email.trim() && customerData.phone.trim();
+    return customerData.name.trim() && isValidEmail(customerData.email) && isValidPhone(customerData.phone);
   };
 
   const handleSubmitOrder = async () => {
-    if (!isFormValid()) {
-      alert(t('alerts.checkoutMissingFields'));
+    const newErrors = {};
+    if (!customerData.name.trim()) {
+      newErrors.name = t('alerts.checkoutMissingFields');
+    }
+    if (!customerData.email.trim()) {
+      newErrors.email = t('alerts.checkoutMissingFields');
+    } else if (!isValidEmail(customerData.email)) {
+      newErrors.email = t('alerts.invalidEmail');
+    }
+    if (!customerData.phone.trim()) {
+      newErrors.phone = t('alerts.checkoutMissingFields');
+    } else if (!isValidPhone(customerData.phone)) {
+      newErrors.phone = t('alerts.invalidPhone');
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
 
+    setErrors({});
     // Show payment QR code - don't send email yet
     setShowPaymentQR(true);
   };
@@ -133,8 +162,10 @@ const Checkout = ({ cart, onClose, onOrderComplete }) => {
                 value={customerData.name}
                 onChange={(e) => handleInputChange('name', e.target.value)}
                 placeholder={t('checkout.fields.name.placeholder')}
+                className={errors.name ? 'input-error' : ''}
                 required
               />
+              {errors.name && <span className="field-error">{errors.name}</span>}
             </div>
             
             <div className="form-group">
@@ -144,8 +175,10 @@ const Checkout = ({ cart, onClose, onOrderComplete }) => {
                 value={customerData.email}
                 onChange={(e) => handleInputChange('email', e.target.value)}
                 placeholder={t('checkout.fields.email.placeholder')}
+                className={errors.email ? 'input-error' : ''}
                 required
               />
+              {errors.email && <span className="field-error">{errors.email}</span>}
             </div>
             
             <div className="form-group">
@@ -155,8 +188,10 @@ const Checkout = ({ cart, onClose, onOrderComplete }) => {
                 value={customerData.phone}
                 onChange={(e) => handleInputChange('phone', e.target.value)}
                 placeholder={t('checkout.fields.phone.placeholder')}
+                className={errors.phone ? 'input-error' : ''}
                 required
               />
+              {errors.phone && <span className="field-error">{errors.phone}</span>}
             </div>
           </div>
           
@@ -191,9 +226,8 @@ const Checkout = ({ cart, onClose, onOrderComplete }) => {
             {t('buttons.backToCart')}
           </button>
           <button 
-            className={`submit-order-btn ${!isFormValid() ? 'disabled' : ''}`}
+            className="submit-order-btn"
             onClick={handleSubmitOrder}
-            disabled={!isFormValid()}
           >
             {t('buttons.placeOrder')}
           </button>

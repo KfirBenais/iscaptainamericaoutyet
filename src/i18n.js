@@ -83,7 +83,9 @@ export const translations = {
     },
     alerts: {
       orderSuccess: 'Order placed successfully! You will receive a confirmation email shortly.',
-      checkoutMissingFields: 'Please fill in all required fields'
+      checkoutMissingFields: 'Please fill in all required fields',
+      invalidEmail: 'Please enter a valid email address',
+      invalidPhone: 'Please enter a valid phone number'
     },
     languageToggle: {
       ariaLabel: 'Toggle site language'
@@ -171,7 +173,9 @@ export const translations = {
     },
     alerts: {
       orderSuccess: 'ההזמנה בוצעה בהצלחה! אישור יישלח אליכם במייל בקרוב.',
-      checkoutMissingFields: 'אנא מלאו את כל השדות החיוניים'
+      checkoutMissingFields: 'אנא מלאו את כל השדות החיוניים',
+      invalidEmail: 'אנא הזינו כתובת אימייל תקינה',
+      invalidPhone: 'אנא הזינו מספר טלפון תקין'
     },
     languageToggle: {
       ariaLabel: 'החלפת שפת האתר'
@@ -205,6 +209,7 @@ export const colorLabels = {
     'Rainbow (Surprise!)': 'Rainbow (Surprise!)',
     'Red': 'Red',
     'Blue': 'Blue',
+    'Baby Blue': 'Baby Blue',
     'Beige (Skin tone)': 'Beige (Skin tone)',
     'Yellow': 'Yellow',
     'Transparent': 'Transparent',
@@ -218,6 +223,7 @@ export const colorLabels = {
     'Galaxy': 'Galaxy',
     'Orange TPU': 'Orange TPU',
     'Black TPU': 'Black TPU',
+    'Maple Wood': 'Maple Wood',
     'WOOD': 'wood'
   },
   he: {
@@ -226,6 +232,7 @@ export const colorLabels = {
     'Rainbow (Surprise!)': 'קשת (הפתעה!)',
     'Red': 'אדום',
     'Blue': 'כחול',
+    'Baby Blue': 'כחול בייבי',
     'Beige (Skin tone)': 'בז\' (גוון עור)',
     'Yellow': 'צהוב',
     'Transparent': 'שקוף',
@@ -239,6 +246,7 @@ export const colorLabels = {
     'Galaxy': 'גלקסי',
     'Orange TPU': 'TPU כתום',
     'Black TPU': 'TPU שחור',
+    'Maple Wood': 'עץ מייפל',
     'WOOD': 'עץ'
   }
 };
