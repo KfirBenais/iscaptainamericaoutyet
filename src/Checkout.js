@@ -33,10 +33,6 @@ const Checkout = ({ cart, onClose, onOrderComplete }) => {
     return /^\d{7,15}$/.test(digits);
   };
 
-  const isFormValid = () => {
-    return customerData.name.trim() && isValidEmail(customerData.email) && isValidPhone(customerData.phone);
-  };
-
   const handleSubmitOrder = async () => {
     const newErrors = {};
     if (!customerData.name.trim()) {
