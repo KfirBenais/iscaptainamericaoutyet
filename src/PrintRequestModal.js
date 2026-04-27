@@ -21,7 +21,10 @@ const PrintRequestModal = ({ onClose }) => {
   const { language, t } = useLanguage();
 
   const [step,           setStep]           = useState(1);
+  const [fileMode,       setFileMode]       = useState('upload'); // 'upload' | 'link'
   const [uploadedFile,   setUploadedFile]   = useState(null);
+  const [modelLink,      setModelLink]      = useState('');
+  const [modelLinkError, setModelLinkError] = useState('');
   const [selectedColors, setSelectedColors] = useState([]);
   const [quantity,       setQuantity]       = useState(1);
   const [notes,          setNotes]          = useState('');
@@ -51,9 +54,20 @@ const PrintRequestModal = ({ onClose }) => {
   };
 
   const validateStep1 = () => {
-    if (!uploadedFile) {
-      setFileError(t('printRequest.fileMissingAlert'));
-      return false;
+    if (fileMode === 'upload') {
+      if (!uploadedFile) {
+        setFileError(t('printRequest.fileMissingAlert'));
+        return false;
+      }
+    } else {
+      if (!modelLink.trim()) {
+        setModelLinkError(t('printRequest.linkMissingAlert'));
+        return false;
+      }
+      try { new URL(modelLink); } catch {
+        setModelLinkError(t('printRequest.linkInvalidAlert'));
+        return false;
+      }
     }
     if (selectedColors.length === 0) {
       alert(t('addToCart.selectColorAlert'));
@@ -85,6 +99,18 @@ const PrintRequestModal = ({ onClose }) => {
     const requestId   = 'REQ-' + Date.now();
     const requestDate = new Date().toLocaleString();
 
+    const fileSource = fileMode === 'upload'
+      ? {
+          fileName: uploadedFile.name,
+          fileSize: uploadedFile.size ? (uploadedFile.size / 1024).toFixed(1) + ' KB' : 'N/A',
+          fileUrl:  uploadedFile.cdnUrl,
+        }
+      : {
+          fileName: 'Model Link',
+          fileSize: 'N/A',
+          fileUrl:  modelLink,
+        };
+
     try {
       const formData = new FormData();
       formData.append('form-name', 'print-request');
@@ -94,16 +120,16 @@ const PrintRequestModal = ({ onClose }) => {
       formData.append('colors',    selectedColors.join(', '));
       formData.append('quantity',  String(quantity));
       formData.append('notes',     notes);
-      formData.append('file-url',  uploadedFile.cdnUrl);
-      formData.append('file-name', uploadedFile.name);
+      formData.append('file-url',  fileSource.fileUrl);
+      formData.append('file-name', fileSource.fileName);
 
       await fetch('/', { method: 'POST', body: formData });
 
       await sendPrintRequestNotification({
         customer:    customerData,
-        fileName:    uploadedFile.name,
-        fileSize:    uploadedFile.size ? (uploadedFile.size / 1024).toFixed(1) + ' KB' : 'N/A',
-        fileUrl:     uploadedFile.cdnUrl,
+        fileName:    fileSource.fileName,
+        fileSize:    fileSource.fileSize,
+        fileUrl:     fileSource.fileUrl,
         colors:      selectedColors,
         quantity,
         notes,
@@ -166,32 +192,69 @@ const PrintRequestModal = ({ onClose }) => {
 
             <div className="form-group">
               <label>{t('printRequest.fileLabel')}</label>
-              <p className="pr-file-hint">
-                {t('printRequest.fileUploadHint').replace('{max}', '500')}
-              </p>
-              <div className="pr-uploadcare-wrapper">
-                <FileUploaderRegular
-                  pubkey={UPLOADCARE_PUBLIC_KEY}
-                  accept={ACCEPTED_FILE_TYPES}
-                  maxLocalFileSizeBytes={500 * 1024 * 1024}
-                  onFileUploadSuccess={handleUploadSuccess}
-                  sourceList="local, url, dropbox, gdrive"
-                  classNameUploader="uc-light"
-                />
+
+              {/* Mode toggle */}
+              <div className="pr-mode-tabs">
+                <button
+                  type="button"
+                  className={`pr-mode-tab ${fileMode === 'upload' ? 'active' : ''}`}
+                  onClick={() => { setFileMode('upload'); setModelLinkError(''); }}
+                >
+                  {t('printRequest.fileModeUpload')}
+                </button>
+                <button
+                  type="button"
+                  className={`pr-mode-tab ${fileMode === 'link' ? 'active' : ''}`}
+                  onClick={() => { setFileMode('link'); setFileError(''); }}
+                >
+                  {t('printRequest.fileModeLink')}
+                </button>
               </div>
-              {uploadedFile && (
-                <div className="pr-file-uploaded">
-                  <span className="pr-file-icon">📄</span>
-                  <span className="pr-file-name">{uploadedFile.name}</span>
-                  <button
-                    className="pr-file-remove"
-                    onClick={() => setUploadedFile(null)}
-                  >
-                    ✕
-                  </button>
-                </div>
+
+              {fileMode === 'upload' && (
+                <>
+                  <p className="pr-file-hint">
+                    {t('printRequest.fileUploadHint').replace('{max}', '500')}
+                  </p>
+                  <div className="pr-uploadcare-wrapper">
+                    <FileUploaderRegular
+                      pubkey={UPLOADCARE_PUBLIC_KEY}
+                      accept={ACCEPTED_FILE_TYPES}
+                      maxLocalFileSizeBytes={500 * 1024 * 1024}
+                      onFileUploadSuccess={handleUploadSuccess}
+                      sourceList="local, url, dropbox, gdrive"
+                      classNameUploader="uc-light"
+                    />
+                  </div>
+                  {uploadedFile && (
+                    <div className="pr-file-uploaded">
+                      <span className="pr-file-icon">📄</span>
+                      <span className="pr-file-name">{uploadedFile.name}</span>
+                      <button
+                        className="pr-file-remove"
+                        onClick={() => setUploadedFile(null)}
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  )}
+                  {fileError && <span className="field-error">{fileError}</span>}
+                </>
               )}
-              {fileError && <span className="field-error">{fileError}</span>}
+
+              {fileMode === 'link' && (
+                <>
+                  <p className="pr-file-hint">{t('printRequest.linkHint')}</p>
+                  <input
+                    type="url"
+                    className={`pr-link-input${modelLinkError ? ' input-error' : ''}`}
+                    value={modelLink}
+                    onChange={(e) => { setModelLink(e.target.value); setModelLinkError(''); }}
+                    placeholder={t('printRequest.linkPlaceholder')}
+                  />
+                  {modelLinkError && <span className="field-error">{modelLinkError}</span>}
+                </>
+              )}
             </div>
 
             <div className="form-group">

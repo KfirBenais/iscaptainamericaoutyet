@@ -1464,8 +1464,67 @@
   padding-top: 0.5rem;
 }
 
+/* Mode tabs: Upload File / Share a Link */
+.pr-mode-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 0.75rem;
+  border: 2px solid #dfe6e9;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.pr-mode-tab {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  background: #f8f9fa;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #636e72;
+  transition: background 0.2s, color 0.2s;
+}
+
+.pr-mode-tab:first-child {
+  border-right: 1px solid #dfe6e9;
+}
+
+.pr-mode-tab.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.pr-mode-tab:hover:not(.active) {
+  background: #eef0ff;
+  color: #667eea;
+}
+
+/* Link input */
+.pr-link-input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 2px solid #c5cdf8;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  background: #f8f9ff;
+  color: #2d3436;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.pr-link-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+  background: white;
+}
+
+.pr-link-input.input-error {
+  border-color: #e74c3c;
+}
+
 .pr-file-hint {
-  font-size: 0.88rem;
   color: #2d3436;
   font-weight: 600;
   margin-top: 0.3rem;
