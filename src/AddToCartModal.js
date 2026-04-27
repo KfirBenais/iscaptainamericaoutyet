@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLanguage, getColorLabel } from './i18n';
+import { useLanguage, getColorLabel, getColorStyle } from './i18n';
 
 const AddToCartModal = ({ product, onAdd, onClose }) => {
   const [quantity, setQuantity] = useState(1);
@@ -60,6 +60,7 @@ const AddToCartModal = ({ product, onAdd, onClose }) => {
                 <div 
                   key={color}
                   className={`color-option ${selectedColors.includes(color) ? 'selected' : ''}`}
+                  style={getColorStyle(color)}
                   onClick={() => toggleColor(color)}
                 >
                   {getColorLabel(color, language)}
@@ -74,7 +75,7 @@ const AddToCartModal = ({ product, onAdd, onClose }) => {
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder={t('addToCart.notesPlaceholder')}
-              rows={4}
+              rows={7}
             />
           </div>
 

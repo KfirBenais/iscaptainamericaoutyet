@@ -164,10 +164,10 @@ export const sendPrintRequestNotification = async (requestData) => {
     const colorList  = requestData.colors.join(', ');
     const orderItems =
       `File: ${requestData.fileName} (${requestData.fileSize})\n` +
+      `Download: ${requestData.fileUrl}\n` +
       `Colors: ${colorList}\n` +
       `Quantity: ${requestData.quantity}\n` +
-      `Notes: ${requestData.notes || '—'}\n\n` +
-      `⚠️ Download the file from your Netlify Forms dashboard.`;
+      `Notes: ${requestData.notes || '—'}`;
 
     const templateParams = {
       order_id:       requestData.requestId,

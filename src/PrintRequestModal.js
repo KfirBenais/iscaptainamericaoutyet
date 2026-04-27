@@ -1,9 +1,11 @@
-import React, { useState, useRef } from 'react';
-import { useLanguage, getColorLabel } from './i18n';
+import React, { useState } from 'react';
+import { FileUploaderRegular } from '@uploadcare/react-uploader';
+import '@uploadcare/react-uploader/core.css';
+import { useLanguage, getColorLabel, getColorStyle } from './i18n';
 import { sendPrintRequestNotification } from './emailService';
 
-const ACCEPTED_FILE_TYPES = '.stl,.obj,.3mf,.ply,.amf,.step,.stp,.fbx,.dxf,.wrl,.vrml,.x3d,.f3d,.ipt,.iges,.igs';
-const MAX_FILE_SIZE_MB = 10;
+const UPLOADCARE_PUBLIC_KEY = '27bba8de6958b10322ab';
+const ACCEPTED_FILE_TYPES = '.stl,.obj,.3mf,.ply,.amf,.step,.stp,.fbx,.dxf,.wrl,.vrml,.x3d,.f3d,.ipt,.iges,.igs,.zip,.rar,.7z';
 
 const availableColors = [
   'White', 'Black', 'Rainbow (Surprise!)', 'Red', 'Blue', 'Beige (Skin tone)',
@@ -17,11 +19,9 @@ const isValidPhone  = (phone) => /^\d{7,15}$/.test(phone.replace(/[\s\-().+]/g, 
 
 const PrintRequestModal = ({ onClose }) => {
   const { language, t } = useLanguage();
-  const fileInputRef = useRef(null);
 
   const [step,           setStep]           = useState(1);
-  const [file,           setFile]           = useState(null);
-  const [dragOver,       setDragOver]       = useState(false);
+  const [uploadedFile,   setUploadedFile]   = useState(null);
   const [selectedColors, setSelectedColors] = useState([]);
   const [quantity,       setQuantity]       = useState(1);
   const [notes,          setNotes]          = useState('');
@@ -30,47 +30,28 @@ const PrintRequestModal = ({ onClose }) => {
   const [fileError,      setFileError]      = useState('');
   const [isSubmitting,   setIsSubmitting]   = useState(false);
   const [submitted,      setSubmitted]      = useState(false);
-  const [submitError,    setSubmitError]    = useState('');
 
-  // ── File handling ──────────────────────────────────────────────────────────
-
-  const applyFile = (f) => {
-    if (!f) return;
-    if (f.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-      setFileError(t('printRequest.fileTooLarge').replace('{max}', MAX_FILE_SIZE_MB));
-      return;
-    }
+  const handleUploadSuccess = (fileInfo) => {
+    setUploadedFile({
+      name:   fileInfo.name,
+      cdnUrl: fileInfo.cdnUrl,
+      size:   fileInfo.size,
+    });
     setFileError('');
-    setFile(f);
   };
-
-  const handleFileChange  = (e)  => applyFile(e.target.files[0]);
-  const handleDragOver    = (e)  => { e.preventDefault(); setDragOver(true); };
-  const handleDragLeave   = ()   => setDragOver(false);
-  const handleDrop        = (e)  => {
-    e.preventDefault();
-    setDragOver(false);
-    applyFile(e.dataTransfer.files[0]);
-  };
-
-  // ── Color toggle ───────────────────────────────────────────────────────────
 
   const toggleColor = (color) =>
     setSelectedColors(prev =>
       prev.includes(color) ? prev.filter(c => c !== color) : [...prev, color]
     );
 
-  // ── Field change helper ────────────────────────────────────────────────────
-
   const handleFieldChange = (field, value) => {
     setCustomerData(prev => ({ ...prev, [field]: value }));
     if (errors[field]) setErrors(prev => ({ ...prev, [field]: undefined }));
   };
 
-  // ── Validation ─────────────────────────────────────────────────────────────
-
   const validateStep1 = () => {
-    if (!file) {
+    if (!uploadedFile) {
       setFileError(t('printRequest.fileMissingAlert'));
       return false;
     }
@@ -97,35 +78,32 @@ const PrintRequestModal = ({ onClose }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // ── Submit ─────────────────────────────────────────────────────────────────
-
   const handleSubmit = async () => {
     if (!validateStep2()) return;
     setIsSubmitting(true);
-    setSubmitError('');
 
     const requestId   = 'REQ-' + Date.now();
     const requestDate = new Date().toLocaleString();
 
     try {
-      // 1. Submit file + details to Netlify Forms
       const formData = new FormData();
       formData.append('form-name', 'print-request');
-      formData.append('name',       customerData.name);
-      formData.append('email',      customerData.email);
-      formData.append('phone',      customerData.phone);
-      formData.append('colors',     selectedColors.join(', '));
-      formData.append('quantity',   String(quantity));
-      formData.append('notes',      notes);
-      formData.append('model-file', file);
+      formData.append('name',      customerData.name);
+      formData.append('email',     customerData.email);
+      formData.append('phone',     customerData.phone);
+      formData.append('colors',    selectedColors.join(', '));
+      formData.append('quantity',  String(quantity));
+      formData.append('notes',     notes);
+      formData.append('file-url',  uploadedFile.cdnUrl);
+      formData.append('file-name', uploadedFile.name);
 
       await fetch('/', { method: 'POST', body: formData });
 
-      // 2. Send EmailJS notification (details only — file is in Netlify dashboard)
       await sendPrintRequestNotification({
         customer:    customerData,
-        fileName:    file.name,
-        fileSize:    (file.size / 1024).toFixed(1) + ' KB',
+        fileName:    uploadedFile.name,
+        fileSize:    uploadedFile.size ? (uploadedFile.size / 1024).toFixed(1) + ' KB' : 'N/A',
+        fileUrl:     uploadedFile.cdnUrl,
         colors:      selectedColors,
         quantity,
         notes,
@@ -136,14 +114,11 @@ const PrintRequestModal = ({ onClose }) => {
       setSubmitted(true);
     } catch (err) {
       console.error('Print request submission error:', err);
-      // Still show success — Netlify likely received the file even if EmailJS failed
       setSubmitted(true);
     } finally {
       setIsSubmitting(false);
     }
   };
-
-  // ── Success screen ─────────────────────────────────────────────────────────
 
   if (submitted) {
     return (
@@ -164,8 +139,6 @@ const PrintRequestModal = ({ onClose }) => {
     );
   }
 
-  // ── Main modal ─────────────────────────────────────────────────────────────
-
   return (
     <div
       className="modal-overlay"
@@ -176,7 +149,6 @@ const PrintRequestModal = ({ onClose }) => {
 
         <h2 className="pr-title">{t('printRequest.modalTitle')}</h2>
 
-        {/* Step indicator */}
         <div className="pr-steps">
           <div className={`pr-step ${step === 1 ? 'pr-step-active' : step > 1 ? 'pr-step-done' : ''}`}>
             <span className="pr-step-num">{step > 1 ? '✓' : '1'}</span>
@@ -189,53 +161,39 @@ const PrintRequestModal = ({ onClose }) => {
           </div>
         </div>
 
-        {/* ── Step 1 ─────────────────────────────────────────────────────── */}
         {step === 1 && (
           <div className="pr-step-content">
 
-            {/* File upload */}
             <div className="form-group">
               <label>{t('printRequest.fileLabel')}</label>
-              <div
-                className={`pr-file-upload ${dragOver ? 'drag-over' : ''} ${file ? 'has-file' : ''}`}
-                onClick={() => fileInputRef.current.click()}
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
-              >
-                {file ? (
-                  <div className="pr-file-info">
-                    <span className="pr-file-icon">📄</span>
-                    <div>
-                      <div className="pr-file-name">{file.name}</div>
-                      <div className="pr-file-size">{(file.size / 1024).toFixed(1)} KB</div>
-                    </div>
-                    <button
-                      className="pr-file-remove"
-                      onClick={(e) => { e.stopPropagation(); setFile(null); }}
-                    >
-                      ✕
-                    </button>
-                  </div>
-                ) : (
-                  <div className="pr-file-placeholder">
-                    <span className="pr-upload-icon">⬆️</span>
-                    <span className="pr-upload-text">{t('printRequest.fileUploadText')}</span>
-                    <span className="pr-upload-hint">{t('printRequest.fileUploadHint').replace('{max}', MAX_FILE_SIZE_MB)}</span>
-                  </div>
-                )}
+              <p className="pr-file-hint">
+                {t('printRequest.fileUploadHint').replace('{max}', '500')}
+              </p>
+              <div className="pr-uploadcare-wrapper">
+                <FileUploaderRegular
+                  pubkey={UPLOADCARE_PUBLIC_KEY}
+                  accept={ACCEPTED_FILE_TYPES}
+                  maxLocalFileSizeBytes={500 * 1024 * 1024}
+                  onFileUploadSuccess={handleUploadSuccess}
+                  sourceList="local, url, dropbox, gdrive"
+                  classNameUploader="uc-light"
+                />
               </div>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept={ACCEPTED_FILE_TYPES}
-                onChange={handleFileChange}
-                style={{ display: 'none' }}
-              />
+              {uploadedFile && (
+                <div className="pr-file-uploaded">
+                  <span className="pr-file-icon">📄</span>
+                  <span className="pr-file-name">{uploadedFile.name}</span>
+                  <button
+                    className="pr-file-remove"
+                    onClick={() => setUploadedFile(null)}
+                  >
+                    ✕
+                  </button>
+                </div>
+              )}
               {fileError && <span className="field-error">{fileError}</span>}
             </div>
 
-            {/* Color selection */}
             <div className="form-group">
               <label>{t('printRequest.colorsLabel')}</label>
               <div className="color-grid">
@@ -243,6 +201,7 @@ const PrintRequestModal = ({ onClose }) => {
                   <div
                     key={color}
                     className={`color-option ${selectedColors.includes(color) ? 'selected' : ''}`}
+                    style={getColorStyle(color)}
                     onClick={() => toggleColor(color)}
                   >
                     {getColorLabel(color, language)}
@@ -251,7 +210,6 @@ const PrintRequestModal = ({ onClose }) => {
               </div>
             </div>
 
-            {/* Quantity */}
             <div className="form-group">
               <label>{t('printRequest.quantityLabel')}</label>
               <div className="quantity-controls">
@@ -261,14 +219,13 @@ const PrintRequestModal = ({ onClose }) => {
               </div>
             </div>
 
-            {/* Notes */}
             <div className="form-group">
               <label>{t('printRequest.notesLabel')}</label>
               <textarea
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 placeholder={t('printRequest.notesPlaceholder')}
-                rows={3}
+                rows={7}
               />
             </div>
 
@@ -283,7 +240,6 @@ const PrintRequestModal = ({ onClose }) => {
           </div>
         )}
 
-        {/* ── Step 2 ─────────────────────────────────────────────────────── */}
         {step === 2 && (
           <div className="pr-step-content">
             <div className="form-group">
@@ -321,8 +277,6 @@ const PrintRequestModal = ({ onClose }) => {
               />
               {errors.phone && <span className="field-error">{errors.phone}</span>}
             </div>
-
-            {submitError && <p className="field-error">{submitError}</p>}
 
             <div className="pr-footer">
               <button

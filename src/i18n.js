@@ -351,3 +351,30 @@ export const getCategoryLabel = (category, language) => {
 export const getColorLabel = (color, language) => {
   return colorLabels[language]?.[color] ?? color;
 };
+
+export const getColorStyle = (colorName) => {
+  const styles = {
+    'White':               { background: '#f8f8f8',                                                                                 color: '#333333' },
+    'Black':               { background: '#1a1a1a',                                                                                 color: '#ffffff' },
+    'Rainbow (Surprise!)': { background: 'linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #c77dff)',                   color: '#ffffff' },
+    'Red':                 { background: '#e74c3c',                                                                                 color: '#ffffff' },
+    'Blue':                { background: '#2980b9',                                                                                 color: '#ffffff' },
+    'Beige (Skin tone)':   { background: '#e8c4a0',                                                                                 color: '#5a3e2b' },
+    'Yellow':              { background: '#f1c40f',                                                                                 color: '#5a4a00' },
+    'Transparent':         { background: 'repeating-conic-gradient(#d0d0d0 0% 25%, #ffffff 0% 50%) 0 0 / 16px 16px',              color: '#444444' },
+    'Green':               { background: '#27ae60',                                                                                 color: '#ffffff' },
+    'Bronze':              { background: '#cd7f32',                                                                                 color: '#ffffff' },
+    'Purple':              { background: '#8e44ad',                                                                                 color: '#ffffff' },
+    'Gray':                { background: '#7f8c8d',                                                                                 color: '#ffffff' },
+    'Green/Red/Blue Mix':  { background: 'linear-gradient(135deg, #27ae60 33%, #e74c3c 66%, #2980b9)',                             color: '#ffffff' },
+    'White Marble':        { background: 'linear-gradient(120deg, #f5f5f5 0%, #e0e0e0 35%, #f8f8f8 60%, #e8e8e8 100%)',           color: '#444444' },
+    'Glow Glitter Green':  { background: '#00e676',                                                                                 color: '#003300' },
+    'Galaxy':              { background: 'linear-gradient(135deg, #0d0d2b 0%, #1a0a4d 50%, #0a1a6e 100%)',                        color: '#c8b8ff' },
+    'Orange TPU':          { background: '#e67e22',                                                                                 color: '#ffffff' },
+    'Black TPU':           { background: '#2c2c2c',                                                                                 color: '#ffffff' },
+    'WOOD':                { background: '#8B4513',                                                                                 color: '#ffe8cc' },
+    'Maple Wood':          { background: '#c8974e',                                                                                 color: '#ffffff' },
+    'Baby Blue':           { background: '#89CFF0',                                                                                 color: '#1a3a5c' },
+  };
+  return styles[colorName] || { background: '#f0f0f0', color: '#333' };
+};

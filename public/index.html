@@ -21,7 +21,6 @@
       name="print-request"
       netlify
       netlify-honeypot="bot-field"
-      enctype="multipart/form-data"
       hidden
     >
       <input type="text"   name="name" />
@@ -30,7 +29,8 @@
       <input type="text"   name="colors" />
       <input type="number" name="quantity" />
       <textarea            name="notes"></textarea>
-      <input type="file"   name="model-file" />
+      <input type="url"    name="file-url" />
+      <input type="text"   name="file-name" />
     </form>
   </body>
 </html>
