@@ -87,6 +87,32 @@ export const translations = {
       invalidEmail: 'Please enter a valid email address',
       invalidPhone: 'Please enter a valid phone number'
     },
+    printRequest: {
+      bannerTitle: '🖨️ Have Your Own 3D Model?',
+      bannerSubtitle: 'Upload your file and get a price quote for a custom print — any shape, any color.',
+      bannerButton: 'Get a Price Quote',
+      modalTitle: '🖨️ Custom Print — Price Quote',
+      stepPrintDetails: 'Print Details',
+      stepYourDetails: 'Your Details',
+      fileLabel: '3D Model File *',
+      fileUploadText: 'Click or drag & drop your 3D file here',
+      fileUploadHint: 'STL · OBJ · 3MF · STEP · FBX · PLY · DXF · and more · Max {max} MB',
+      fileTooLarge: 'File is too large. Maximum size is {max} MB.',
+      fileMissingAlert: 'Please upload a 3D model file.',
+      colorsLabel: 'Select Colors *',
+      quantityLabel: 'Quantity',
+      notesLabel: 'Additional Notes',
+      notesPlaceholder: 'Describe size requirements, finish preferences, intended use, or any other details…',
+      nextButton: 'Next →',
+      backButton: '← Back',
+      sendButton: '📤 Send Request',
+      sendingButton: 'Sending…',
+      successTitle: 'Request Submitted!',
+      successBody: 'We received your 3D model and will get back to you with a price quote.',
+      successContactPrefix: "We'll reach out at",
+      successContactOr: 'or',
+      closeButton: 'Close'
+    },
     languageToggle: {
       ariaLabel: 'Toggle site language'
     }
@@ -176,6 +202,32 @@ export const translations = {
       checkoutMissingFields: 'אנא מלאו את כל השדות החיוניים',
       invalidEmail: 'אנא הזינו כתובת אימייל תקינה',
       invalidPhone: 'אנא הזינו מספר טלפון תקין'
+    },
+    printRequest: {
+      bannerTitle: '🖨️ יש לכם מודל תלת-ממד משלכם?',
+      bannerSubtitle: 'העלו את הקובץ וקבלו הצעת מחיר להדפסה מותאמת — כל צורה, כל צבע.',
+      bannerButton: 'קבלו הצעת מחיר',
+      modalTitle: '🖨️ הדפסה מותאמת — הצעת מחיר',
+      stepPrintDetails: 'פרטי ההדפסה',
+      stepYourDetails: 'הפרטים שלכם',
+      fileLabel: 'קובץ מודל תלת-ממד *',
+      fileUploadText: 'לחצו או גררו את הקובץ לכאן',
+      fileUploadHint: 'STL · OBJ · 3MF · STEP · FBX · PLY · DXF · ועוד · עד {max} MB',
+      fileTooLarge: 'הקובץ גדול מדי. גודל מקסימלי: {max} MB.',
+      fileMissingAlert: 'אנא העלו קובץ מודל תלת-ממד.',
+      colorsLabel: 'בחרו צבעים *',
+      quantityLabel: 'כמות',
+      notesLabel: 'הערות נוספות',
+      notesPlaceholder: 'תארו דרישות גודל, העדפות גימור, שימוש מיועד, או כל פרט נוסף…',
+      nextButton: 'הבא ←',
+      backButton: '→ חזרה',
+      sendButton: '📤 שליחת הבקשה',
+      sendingButton: 'שולח…',
+      successTitle: 'הבקשה נשלחה!',
+      successBody: 'קיבלנו את המודל שלכם ונחזור אליכם עם הצעת מחיר.',
+      successContactPrefix: 'ניצור איתכם קשר בכתובת',
+      successContactOr: 'או',
+      closeButton: 'סגור'
     },
     languageToggle: {
       ariaLabel: 'החלפת שפת האתר'

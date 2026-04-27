@@ -16,5 +16,21 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <!-- Hidden Netlify form — required for Netlify to detect the form at build time -->
+    <form
+      name="print-request"
+      netlify
+      netlify-honeypot="bot-field"
+      enctype="multipart/form-data"
+      hidden
+    >
+      <input type="text"   name="name" />
+      <input type="email"  name="email" />
+      <input type="tel"    name="phone" />
+      <input type="text"   name="colors" />
+      <input type="number" name="quantity" />
+      <textarea            name="notes"></textarea>
+      <input type="file"   name="model-file" />
+    </form>
   </body>
 </html>

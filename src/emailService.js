@@ -4,7 +4,10 @@ import emailjs from '@emailjs/browser';
 const EMAILJS_CONFIG = {
   serviceId: 'service_mvorj74', // Your EmailJS service ID
   ownerTemplateId: 'template_ovjxldq', // Template for business owner notifications
-  customerTemplateId: 'template_coiojip', // Template for customer confirmations (create this next)
+  customerTemplateId: 'template_coiojip', // Template for customer confirmations
+  // Reuses the owner template — create a dedicated "print_request" template in EmailJS
+  // and replace this ID if you want a different email layout for print requests.
+  printRequestTemplateId: 'template_ovjxldq',
   publicKey: 'wpsMuZqOmm54X11l2' // Your EmailJS public key
 };
 
@@ -150,5 +153,46 @@ export const sendOrderEmail = async (orderData) => {
   }
 };
 
-const emailService = { sendOrderEmail, sendOwnerNotification, sendCustomerConfirmation };
+/**
+ * Send a print-request (custom model) notification to the business owner.
+ * The actual 3D file is stored in the Netlify Forms dashboard;
+ * this email carries all the text details so you get an instant alert.
+ * @param {Object} requestData
+ */
+export const sendPrintRequestNotification = async (requestData) => {
+  try {
+    const colorList  = requestData.colors.join(', ');
+    const orderItems =
+      `File: ${requestData.fileName} (${requestData.fileSize})\n` +
+      `Colors: ${colorList}\n` +
+      `Quantity: ${requestData.quantity}\n` +
+      `Notes: ${requestData.notes || '—'}\n\n` +
+      `⚠️ Download the file from your Netlify Forms dashboard.`;
+
+    const templateParams = {
+      order_id:       requestData.requestId,
+      customer_name:  requestData.customer.name,
+      customer_email: requestData.customer.email,
+      customer_phone: requestData.customer.phone,
+      order_items:    orderItems,
+      total_amount:   'TBD — pending price quote',
+      order_date:     requestData.requestDate,
+      items_count:    1,
+      to_email:       'kfir_benais@hotmail.com',
+    };
+
+    const response = await emailjs.send(
+      EMAILJS_CONFIG.serviceId,
+      EMAILJS_CONFIG.printRequestTemplateId,
+      templateParams
+    );
+
+    return response;
+  } catch (error) {
+    console.error('Error sending print-request notification:', error);
+    throw error;
+  }
+};
+
+const emailService = { sendOrderEmail, sendOwnerNotification, sendCustomerConfirmation, sendPrintRequestNotification };
 export default emailService;

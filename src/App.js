@@ -3,6 +3,7 @@ import { useState, useMemo, useCallback, useEffect } from 'react';
 import AddToCartModal from './AddToCartModal';
 import Cart from './Cart';
 import Checkout from './Checkout';
+import PrintRequestModal from './PrintRequestModal';
 import {
   LanguageContext,
   translations,
@@ -44,6 +45,7 @@ function App() {
   const [showCheckout, setShowCheckout] = useState(false);
   const [showAddToCart, setShowAddToCart] = useState(false);
   const [productToAdd, setProductToAdd] = useState(null);
+  const [showPrintRequest, setShowPrintRequest] = useState(false);
   const [language, setLanguage] = useState(getDefaultLanguage());
 
   const dictionary = useMemo(() => translations[language], [language]);
@@ -206,6 +208,22 @@ function App() {
         </div>
       </header>
       
+      {/* Custom Print Request Banner */}
+      <section className="print-request-banner">
+        <div className="print-request-banner-content">
+          <div className="prb-text">
+            <h2>{t('printRequest.bannerTitle')}</h2>
+            <p>{t('printRequest.bannerSubtitle')}</p>
+          </div>
+          <button
+            className="print-request-cta-btn"
+            onClick={() => setShowPrintRequest(true)}
+          >
+            {t('printRequest.bannerButton')}
+          </button>
+        </div>
+      </section>
+
       <section className="color-info-section">
         <div className="color-info-container">
           <h2 className="color-info-title">{t('colorSection.title')}</h2>
@@ -377,6 +395,11 @@ function App() {
             alert(t('alerts.orderSuccess'));
           }}
         />
+      )}
+
+      {/* Custom Print Request Modal */}
+      {showPrintRequest && (
+        <PrintRequestModal onClose={() => setShowPrintRequest(false)} />
       )}
       </div>
     </LanguageContext.Provider>

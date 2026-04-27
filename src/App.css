@@ -1192,6 +1192,273 @@
   }
 }
 
+/* ============================================================
+   Custom Print Request — Banner
+   ============================================================ */
+.print-request-banner {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  padding: 2.5rem 2rem;
+  border-bottom: 3px solid #667eea;
+}
+
+.print-request-banner-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.prb-text h2 {
+  color: #ffffff;
+  font-size: 1.8rem;
+  margin-bottom: 0.4rem;
+}
+
+.prb-text p {
+  color: #a0aec0;
+  font-size: 1rem;
+}
+
+.print-request-cta-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 0.9rem 0;
+  width: 220px;
+  border-radius: 50px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.print-request-cta-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.55);
+}
+
+/* ============================================================
+   Custom Print Request — Modal
+   ============================================================ */
+.print-request-modal {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem 2.5rem;
+  max-width: 600px;
+  width: 95%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.pr-title {
+  font-size: 1.5rem;
+  color: #2d3436;
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+/* Step indicator */
+.pr-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.pr-step {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: #b2bec3;
+  font-weight: 500;
+}
+
+.pr-step-active {
+  color: #667eea;
+  font-weight: 700;
+}
+
+.pr-step-done {
+  color: #00b894;
+  font-weight: 600;
+}
+
+.pr-step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: #dfe6e9;
+  color: #636e72;
+}
+
+.pr-step-active .pr-step-num {
+  background: #667eea;
+  color: white;
+}
+
+.pr-step-done .pr-step-num {
+  background: #00b894;
+  color: white;
+}
+
+.pr-step-line {
+  flex: 1;
+  max-width: 60px;
+  height: 2px;
+  background: #dfe6e9;
+  border-radius: 2px;
+}
+
+/* Step content */
+.pr-step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* File upload area */
+.pr-file-upload {
+  border: 2px dashed #b2bec3;
+  border-radius: 10px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  text-align: center;
+  background: #f8f9fa;
+}
+
+.pr-file-upload:hover,
+.pr-file-upload.drag-over {
+  border-color: #667eea;
+  background: #f0f2ff;
+}
+
+.pr-file-upload.has-file {
+  border-color: #00b894;
+  background: #f0fdf9;
+}
+
+.pr-file-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.pr-upload-icon {
+  font-size: 2rem;
+}
+
+.pr-upload-text {
+  font-size: 0.95rem;
+  color: #2d3436;
+  font-weight: 500;
+}
+
+.pr-upload-hint {
+  font-size: 0.78rem;
+  color: #636e72;
+}
+
+.pr-file-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.pr-file-icon {
+  font-size: 1.6rem;
+}
+
+.pr-file-name {
+  font-weight: 600;
+  color: #2d3436;
+  word-break: break-all;
+}
+
+.pr-file-size {
+  font-size: 0.8rem;
+  color: #636e72;
+}
+
+.pr-file-remove {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  margin-left: auto;
+}
+
+.pr-file-remove:hover {
+  background: #ffeaea;
+}
+
+/* Footer / action row */
+.pr-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding-top: 0.5rem;
+}
+
+/* Success screen */
+.print-request-success {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.pr-success-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+.print-request-success h2 {
+  font-size: 1.6rem;
+  margin-bottom: 0.75rem;
+  color: #2d3436;
+}
+
+.print-request-success p {
+  color: #636e72;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.pr-success-contact {
+  color: #2d3436 !important;
+  margin: 1rem 0 1.5rem !important;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .prb-text h2 {
+    font-size: 1.4rem;
+  }
+
+  .print-request-modal {
+    padding: 1.5rem 1.25rem;
+  }
+}
+
 /* Modal Styles */
 .modal-overlay {
   position: fixed;
