@@ -4,6 +4,8 @@ import AddToCartModal from './AddToCartModal';
 import Cart from './Cart';
 import Checkout from './Checkout';
 import PrintRequestModal from './PrintRequestModal';
+import StarRating from './StarRating';
+import { generateReviews, getAverageRating } from './reviewsUtils';
 import {
   LanguageContext,
   translations,
@@ -293,6 +295,16 @@ function App() {
               </div>
               <div className="product-info">
                 <h3 className="product-name">{product.name}</h3>
+                {(() => {
+                  const reviews = generateReviews(product.name);
+                  const avg = getAverageRating(reviews);
+                  return (
+                    <div className="product-rating">
+                      <StarRating rating={avg} size={14} />
+                      <span className="rating-text">{avg} ({reviews.length})</span>
+                    </div>
+                  );
+                })()}
                 <p className="product-price">{product.price} ₪</p>
                 <button 
                   className="quick-add-to-cart-btn"
@@ -346,6 +358,16 @@ function App() {
             </div>
             <div className="modal-info">
               <h2 className="modal-name">{selectedProduct.name}</h2>
+              {(() => {
+                const reviews = generateReviews(selectedProduct.name);
+                const avg = getAverageRating(reviews);
+                return (
+                  <div className="modal-rating">
+                    <StarRating rating={avg} size={18} />
+                    <span className="modal-rating-text">{avg} ({reviews.length} reviews)</span>
+                  </div>
+                );
+              })()}
               <p className="modal-price">{selectedProduct.price} ₪</p>
               <button 
                 className="add-to-cart-btn"
@@ -353,6 +375,24 @@ function App() {
               >
                 {t('buttons.addToCart')}
               </button>
+              {(() => {
+                const reviews = generateReviews(selectedProduct.name);
+                return (
+                  <div className="reviews-section">
+                    <h3 className="reviews-title">Customer Reviews</h3>
+                    {reviews.map((review, i) => (
+                      <div key={i} className="review-item">
+                        <div className="review-header">
+                          <span className="review-author">{review.author}</span>
+                          <span className="verified-badge">✓ Verified Purchase</span>
+                        </div>
+                        <StarRating rating={review.rating} size={13} />
+                        {review.text && <p className="review-text">{review.text}</p>}
+                      </div>
+                    ))}
+                  </div>
+                );
+              })()}
             </div>
           </div>
         </div>
