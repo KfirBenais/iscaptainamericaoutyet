@@ -10,6 +10,43 @@
   min-height: 100vh;
 }
 
+.contact-bar {
+  background: #1a1a2e;
+  color: #ccc;
+  text-align: center;
+  padding: 0.35rem 1rem;
+  font-size: 0.78rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.contact-bar-link {
+  color: #a78bfa;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.contact-bar-link:hover {
+  color: #fff;
+}
+
+.contact-bar-link.whatsapp:hover {
+  color: #25d366;
+}
+
+.contact-bar-link.telegram:hover {
+  color: #29b6f6;
+}
+
+.contact-bar-sep {
+  color: #444;
+  user-select: none;
+}
+
 .App-header {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
@@ -34,7 +71,7 @@
 .language-toggle {
   position: fixed;
   left: 1rem;
-  top: 1rem;
+  top: 2rem;
   z-index: 1100;
   display: flex;
   align-items: center;

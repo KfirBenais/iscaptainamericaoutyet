@@ -195,6 +195,13 @@ function App() {
           <span className="language-icon">🌐</span>
           <span className="language-label">{language === 'en' ? 'עברית' : 'English'}</span>
         </button>
+        <div className="contact-bar">
+          <a href="mailto:kfir_benais@hotmail.com" className="contact-bar-link">📧 Email</a>
+          <span className="contact-bar-sep">|</span>
+          <a href="https://wa.me/qr/IWGDFO4DWP6RF1" target="_blank" rel="noopener noreferrer" className="contact-bar-link whatsapp">💬 WhatsApp</a>
+          <span className="contact-bar-sep">|</span>
+          <a href="https://t.me/+972549430380" target="_blank" rel="noopener noreferrer" className="contact-bar-link telegram">✈️ Telegram</a>
+        </div>
         <header className="App-header">
         <div className="header-content">
           <div className="header-title">
