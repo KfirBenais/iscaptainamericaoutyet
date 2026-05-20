@@ -918,7 +918,7 @@
 
   .language-toggle {
     left: 0.5rem;
-    top: 0.5rem;
+    top: 2.4rem;
     padding: 0.3rem 0.7rem;
   }
   
@@ -947,7 +947,7 @@
   /* Mobile cart icon improvements */
   .cart-icon-container {
     right: 0.5rem;
-    top: 0.5rem;
+    top: 1.5rem;
     padding: 0.4rem;
   }
 
