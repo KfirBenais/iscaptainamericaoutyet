@@ -142,8 +142,7 @@ function App() {
     { name: "Eureka Mignon Dosing Funnel 58mm", price: 20, image: "./Images/EurekaMignonFunnel.jpg", category: "Coffee World" },
     { name: "General Dosing Funnel 58mm", price: 20, image: "./Images/GeneralDosingFunnel.jpg", category: "Coffee World" },
     { name: "Portafilter Tamper Station", price: 35, image: "./Images/PortafilterTamperStation.jpg", category: "Coffee World" },
-    { name: "Puck Screen Removal Tool", price: 10, image: "./Images/PuckScreenRemovalTool.jpg", category: "Coffee World" },
-    { name: "Puck Screen Desk Holder", price: 15, image: "./Images/PuckScreenDeskHolder.jpg", category: "Coffee World" },
+    { name: "Puck Screen Desk Holder", price: 20, image: "./Images/PuckScreenDeskHolder.jpg", category: "Coffee World" },
     { name: "Puck Screen Magnetic Holder", price: 15, image: "./Images/PuckScreenMagneticHolder.jpg", category: "Coffee World" },
     
   ];
