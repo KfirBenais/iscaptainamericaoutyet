@@ -256,7 +256,8 @@ export const categoryLabels = {
     Utilities: 'Utilities',
     Toys: 'Toys',
     Decorative: 'Decorative',
-    Fidgets: 'Fidgets'
+    Fidgets: 'Fidgets',
+    'Coffee World': 'Coffee World'
   },
   he: {
     All: 'הכל',
@@ -264,7 +265,8 @@ export const categoryLabels = {
     Utilities: 'עזרים',
     Toys: 'צעצועים',
     Decorative: 'דקורציה',
-    Fidgets: 'פידג\'טים'
+    Fidgets: 'פידג\'טים',
+    'Coffee World': 'עולם הקפה'
   }
 };
 

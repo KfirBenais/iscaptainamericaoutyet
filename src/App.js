@@ -75,11 +75,11 @@ function App() {
   }, [language]);
 
   const products = [  
-    { name: "Snoppy Book mark", price: 100, image: "./Images/Snoppy.jpeg", category: "Figurines" },
-    { name: "One Piece Set", price: 100, image: "./Images/OnePieceSet.jpeg", category: "Figurines" },
+    { name: "Snoppy Book mark", price: 8, image: "./Images/Snoppy.jpeg", category: "Figurines" },
     { name: "Coffee Clicker", price: 15, image: "./Images/CoffeeClicker.webp", category: "Fidgets" },
     { name: "Dumpling Clicker", price: 15, image: "./Images/DumplingClicker.webp", category: "Fidgets" },
     { name: "Pikachu Spiderman", price: 30, image: "./Images/PikachuSpiderman.jpeg", category: "Figurines" },
+    { name: "One Piece Set", price: 100, image: "./Images/OnePieceSet.jpeg", category: "Figurines" },
     { name: "Oreo Grinder", price: 15, image: "./Images/OreoGrinder.jpeg", category: "Utilities" },
     { name: "Groot Planter", price: 20, image: "./Images/GrootPlanter.jpeg", category: "Figurines" },
     { name: "Cocker Spaniel", price: 30, image: "./Images/CockerSpaniel.jpeg", category: "Figurines" },
@@ -137,6 +137,14 @@ function App() {
     { name: "Switch 2 Mouse Adapter", price: 25, image: "./Images/Switch2MouseAdapter.jpg", category: "Utilities" },
     { name: "Pen Holder - Desk Organizer", price: 40, image: "./Images/PenHolder.jpg", category: "Utilities" },
     { name: "Mosquito Net Dual-Sided Tool", price: 6, image: "./Images/MosquitoNetTool.webp", category: "Utilities" },
+    { name: "Coffee Accessories Organizer", price: 40, image: "./Images/CoffeeAccessoriesOrganizer.jpg", category: "Coffee World" },
+    { name: "WDT Tool", price: 20, image: "./Images/WDTTool.jpg", category: "Coffee World" },
+    { name: "Eureka Mignon Dosing Funnel 58mm", price: 20, image: "./Images/EurekaMignonFunnel.jpg", category: "Coffee World" },
+    { name: "General Dosing Funnel 58mm", price: 20, image: "./Images/GeneralDosingFunnel.jpg", category: "Coffee World" },
+    { name: "Portafilter Tamper Station", price: 35, image: "./Images/PortafilterTamperStation.jpg", category: "Coffee World" },
+    { name: "Puck Screen Removal Tool", price: 10, image: "./Images/PuckScreenRemovalTool.jpg", category: "Coffee World" },
+    { name: "Puck Screen Desk Holder", price: 15, image: "./Images/PuckScreenDeskHolder.jpg", category: "Coffee World" },
+    { name: "Puck Screen Magnetic Holder", price: 15, image: "./Images/PuckScreenMagneticHolder.jpg", category: "Coffee World" },
     
   ];
 
