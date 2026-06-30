@@ -290,7 +290,8 @@ export const colorLabels = {
     'Orange TPU': 'Orange TPU',
     'Black TPU': 'Black TPU',
     'Maple Wood': 'Maple Wood',
-    'WOOD': 'wood'
+    'WOOD': 'wood',
+    'Pink Magenta': 'Pink Magenta'
   },
   he: {
     'White': 'לבן',
@@ -313,7 +314,8 @@ export const colorLabels = {
     'Orange TPU': 'TPU כתום',
     'Black TPU': 'TPU שחור',
     'Maple Wood': 'עץ מייפל',
-    'WOOD': 'עץ'
+    'WOOD': 'עץ',
+    'Pink Magenta': 'ורוד מגנטה'
   }
 };
 
@@ -389,6 +391,7 @@ export const getColorStyle = (colorName) => {
     'WOOD':                { background: '#8B4513',                                                                                 color: '#ffe8cc' },
     'Maple Wood':          { background: '#c8974e',                                                                                 color: '#ffffff' },
     'Baby Blue':           { background: '#89CFF0',                                                                                 color: '#1a3a5c' },
+    'Pink Magenta':        { background: '#ff00aa',                                                                                 color: '#ffffff' },
   };
   return styles[colorName] || { background: '#f0f0f0', color: '#333' };
 };
