@@ -33,6 +33,7 @@ const colorPalette = [
   { name: 'White Marble', className: 'white-marble' },
   { name: 'Glow Glitter Green', className: 'glow-glitter-green' },
   { name: 'Galaxy', className: 'galaxy' },
+  { name: 'Orange', className: 'orange-tpu' },
   { name: 'Orange TPU', className: 'orange-tpu' },
   { name: 'Black TPU', className: 'black-tpu' },
   { name: 'Maple Wood', className: 'maple-wood' },
@@ -75,9 +76,11 @@ function App() {
   }, [language]);
 
   const products = [  
+    { name: "One More Whisky?", price: 25, image: "./Images/OneMoreWhisky.webp", category: "Toys" },
     { name: "Snoppy Book mark", price: 8, image: "./Images/Snoppy.jpeg", category: "Figurines" },
     { name: "Coffee Clicker", price: 15, image: "./Images/CoffeeClicker.webp", category: "Fidgets" },
-    { name: "Dumpling Clicker", price: 15, image: "./Images/DumplingClicker.webp", category: "Fidgets" },
+    { name: "Dumpling", price: 25, image: "./Images/BigDumpling.jpg", category: "Toys" },
+    { name: "Dumpling Clicker", price: 12, image: "./Images/DumplingClicker.webp", category: "Fidgets" },
     { name: "Pikachu Spiderman", price: 30, image: "./Images/PikachuSpiderman.jpeg", category: "Figurines" },
     { name: "One Piece Set", price: 100, image: "./Images/OnePieceSet.jpeg", category: "Figurines" },
     { name: "Oreo Grinder", price: 15, image: "./Images/OreoGrinder.jpeg", category: "Utilities" },
@@ -140,7 +143,6 @@ function App() {
     { name: "Coffee Accessories Organizer", price: 40, image: "./Images/CoffeeAccessoriesOrganizer.jpg", category: "Coffee World" },
     { name: "WDT Tool", price: 20, image: "./Images/WDTTool.jpg", category: "Coffee World" },
     { name: "Eureka Mignon Dosing Funnel 58mm", price: 20, image: "./Images/EurekaMignonFunnel.jpg", category: "Coffee World" },
-    { name: "General Dosing Funnel 58mm", price: 20, image: "./Images/GeneralDosingFunnel.jpg", category: "Coffee World" },
     { name: "Portafilter Tamper Station", price: 35, image: "./Images/PortafilterTamperStation.jpg", category: "Coffee World" },
     { name: "Puck Screen Desk Holder", price: 20, image: "./Images/PuckScreenDeskHolder.jpg", category: "Coffee World" },
     { name: "Puck Screen Magnetic Holder", price: 15, image: "./Images/PuckScreenMagneticHolder.jpg", category: "Coffee World" },
