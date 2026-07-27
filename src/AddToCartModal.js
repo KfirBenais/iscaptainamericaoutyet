@@ -9,7 +9,7 @@ const AddToCartModal = ({ product, onAdd, onClose }) => {
 
   const availableColors = [
     'White', 'Black', 'Rainbow (Surprise!)', 'Red', 'Blue', 'Beige (Skin tone)', 
-    'Yellow', 'Transparent', 'Green', 'Bronze', 'Purple', 'Gray', 'Green/Red/Blue Mix',
+    'Yellow', 'Transparent', 'Green', 'Bronze', 'Brown', 'Purple', 'Gray', 'Green/Red/Blue Mix',
     'White Marble', 'Glow Glitter Green', 'Galaxy', 'Orange TPU', 'Black TPU', 'WOOD',
     'Maple Wood', 'Baby Blue'
   ];

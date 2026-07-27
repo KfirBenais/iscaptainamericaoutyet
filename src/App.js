@@ -27,6 +27,7 @@ const colorPalette = [
   { name: 'Transparent', className: 'transparent' },
   { name: 'Green', className: 'green' },
   { name: 'Bronze', className: 'bronze' },
+  { name: 'Brown', className: 'brown' },
   { name: 'Purple', className: 'purple' },
   { name: 'Gray', className: 'gray' },
   { name: 'Green/Red/Blue Mix', className: 'green-red-darkblue' },
