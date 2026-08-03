@@ -77,7 +77,7 @@ function App() {
   }, [language]);
 
   const products = [  
-    { name: "Charmander Keychain", price: 12, image: "./Images/CharmanderKeychain.jpeg", category: "Toys" },
+    { name: "Pokemon Keychain (Choose One)", price: 10, image: "./Images/pokemonKeyChain.jpeg", category: "Toys" },
     { name: "Pokeball Pen Holder", price: 40, image: "./Images/PokeballPenHolder.jpeg", category: "Toys" },
     { name: "Soccer Ball PiggyBox", price: 35, image: "./Images/SoccerPiggyBox.jpeg", category: "Toys" },
     { name: "One More Whisky?", price: 25, image: "./Images/OneMoreWhisky.webp", category: "Toys" },
