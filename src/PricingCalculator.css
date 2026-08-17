@@ -1,0 +1,359 @@
+/* Internal pricing calculator - private page, styled to match the main site. */
+
+.pc-page {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  min-height: 100vh;
+  background: #f7f7fb;
+}
+
+.pc-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2rem 1rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pc-title {
+  font-size: 1.9rem;
+  margin: 0;
+}
+
+.pc-subtitle {
+  margin: 0.4rem 0 0;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.pc-main {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.pc-card {
+  background: white;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.pc-card-title {
+  font-size: 1.15rem;
+  color: #2d3436;
+  margin: 0 0 1.25rem;
+}
+
+.pc-field {
+  display: block;
+  margin-bottom: 1.1rem;
+}
+
+.pc-field:last-child {
+  margin-bottom: 0;
+}
+
+.pc-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #2d3436;
+  font-size: 0.95rem;
+}
+
+.pc-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: white;
+  color: #2d3436;
+}
+
+.pc-input:focus {
+  border-color: #667eea;
+  outline: none;
+}
+
+.pc-select {
+  cursor: pointer;
+}
+
+/* Breakdown ------------------------------------------------------------- */
+
+.pc-breakdown {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+}
+
+.pc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.pc-row:last-child {
+  border-bottom: none;
+}
+
+.pc-row-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.pc-row-label {
+  font-weight: 600;
+  color: #2d3436;
+  font-size: 0.95rem;
+}
+
+.pc-row-detail {
+  font-size: 0.78rem;
+  color: #888;
+}
+
+.pc-row-amount {
+  font-weight: 600;
+  color: #2d3436;
+  white-space: nowrap;
+}
+
+.pc-row-subtotal {
+  border-top: 2px solid #e0e0e0;
+  color: #555;
+}
+
+.pc-row-rounding .pc-row-label,
+.pc-row-rounding .pc-row-amount {
+  color: #888;
+  font-weight: 500;
+  font-size: 0.88rem;
+}
+
+.pc-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.25rem;
+  padding: 1rem 1.25rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.pc-total-label {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.pc-total-amount {
+  font-size: 1.6rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Settings -------------------------------------------------------------- */
+
+.pc-settings-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2d3436;
+  cursor: pointer;
+}
+
+.pc-chevron {
+  color: #667eea;
+  font-size: 0.8rem;
+}
+
+.pc-settings {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.pc-settings-title {
+  font-size: 0.95rem;
+  color: #2d3436;
+  margin: 1.25rem 0 0.75rem;
+}
+
+.pc-hint {
+  font-size: 0.82rem;
+  color: #888;
+  line-height: 1.6;
+  margin: 0 0 1.25rem;
+}
+
+.pc-hint code {
+  background: #f0f0f5;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  direction: ltr;
+  display: inline-block;
+}
+
+.pc-level-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.pc-field-compact {
+  margin-bottom: 0;
+}
+
+.pc-field-compact .pc-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #666;
+}
+
+.pc-field-compact .pc-input {
+  padding: 0.55rem;
+}
+
+/* Buttons --------------------------------------------------------------- */
+
+.pc-primary-btn {
+  width: 100%;
+  padding: 0.85rem;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pc-primary-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+}
+
+.pc-primary-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.pc-ghost-btn {
+  margin-top: 1.25rem;
+  padding: 0.6rem 1.1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  background: white;
+  color: #666;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.pc-ghost-btn:hover {
+  border-color: #667eea;
+  color: #667eea;
+}
+
+/* Password gate --------------------------------------------------------- */
+
+.pc-gate {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.pc-gate-card {
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+}
+
+.pc-gate-title {
+  font-size: 1.3rem;
+  color: #2d3436;
+  margin: 0 0 0.4rem;
+}
+
+.pc-gate-subtitle {
+  font-size: 0.9rem;
+  color: #888;
+  margin: 0 0 1.25rem;
+}
+
+.pc-gate-card .pc-input {
+  text-align: center;
+}
+
+.pc-gate-card .pc-primary-btn {
+  margin-top: 1rem;
+}
+
+.pc-error {
+  display: block;
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 0.6rem;
+}
+
+/* Mobile ---------------------------------------------------------------- */
+
+@media (max-width: 480px) {
+  .pc-header {
+    padding: 1.5rem 1rem;
+  }
+
+  .pc-title {
+    font-size: 1.5rem;
+  }
+
+  .pc-main {
+    padding: 1rem 0.75rem 2.5rem;
+  }
+
+  .pc-card {
+    padding: 1.15rem;
+    border-radius: 16px;
+  }
+
+  .pc-breakdown {
+    padding: 0.4rem 0.8rem;
+  }
+
+  .pc-total-amount {
+    font-size: 1.4rem;
+  }
+
+  .pc-level-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+  }
+}
