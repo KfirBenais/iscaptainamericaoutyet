@@ -1,19 +1,18 @@
 /**
  * Configuration for the internal pricing calculator.
  *
- * This is a private, unlisted page - it is not linked from the site, not in the
- * menu, not in the footer. Everything the calculator uses is defined here so the
- * numbers can be tuned without touching the component code.
+ * The page is not linked from anywhere on the site - not in the menu, not in the
+ * footer, not in the catalog. Everything the calculator uses is defined here so
+ * the numbers can be tuned without touching the component code.
  */
 
 /**
- * The unlisted route the calculator lives on.
+ * The route the calculator lives on.
  * Reachable as both a real path and a hash route:
- *   https://<site>/x/27d16ba9b5ac9e6d
- *   https://<site>/#/x/27d16ba9b5ac9e6d      (works without any host redirect rules)
- * Change this string to rotate the address.
+ *   https://<site>/pricing
+ *   https://<site>/#/pricing      (works without any host redirect rules)
  */
-export const SECRET_PATH = '/x/27d16ba9b5ac9e6d';
+export const CALCULATOR_PATH = '/pricing';
 
 /** Every price component of the formula, in shekels. */
 export const PRICING_DEFAULTS = {
@@ -27,6 +26,18 @@ export const PRICING_DEFAULTS = {
   glueLevels: { none: 0, light: 5, medium: 10, hard: 15 },
   /** Painting work by difficulty. */
   paintLevels: { none: 0, light: 10, medium: 20, hard: 30 },
+  /**
+   * Bought-in parts, charged per unit on top of everything else.
+   * To add one: append an entry with a new `id`. It shows up in the form and in
+   * the settings panel on its own - nothing else needs changing.
+   */
+  extraMaterials: [
+    { id: 'clicker', label: 'קליקר', price: 1.5 },
+    { id: 'magnet', label: 'מגנט', price: 1 },
+    { id: 'keyring', label: 'מחזיק מפתחות (טבעת)', price: 2 }
+  ],
+  /** Quantity a newly ticked extra material starts at. */
+  extraMaterialDefaultQuantity: 1,
   /** The final price is rounded to the nearest multiple of this. */
   roundToNearest: 5
 };

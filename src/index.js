@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import PricingCalculator from './PricingCalculator';
-import { SECRET_PATH } from './pricingConfig';
+import { CALCULATOR_PATH } from './pricingConfig';
 
 const normalize = (value) => (value || '').replace(/\/+$/, '').toLowerCase() || '/';
 
@@ -12,7 +12,7 @@ const normalize = (value) => (value || '').replace(/\/+$/, '').toLowerCase() || 
  * the equivalent hash route, so it also works on hosts without SPA rewrite rules.
  */
 const isPricingRoute = () => {
-  const target = normalize(SECRET_PATH);
+  const target = normalize(CALCULATOR_PATH);
   return (
     normalize(window.location.pathname) === target ||
     normalize(window.location.hash.replace(/^#/, '')) === target

@@ -17,7 +17,8 @@ const editableDefaults = () => ({
   printerHourlyRate: PRICING_DEFAULTS.printerHourlyRate,
   roundToNearest: PRICING_DEFAULTS.roundToNearest,
   glueLevels: { ...PRICING_DEFAULTS.glueLevels },
-  paintLevels: { ...PRICING_DEFAULTS.paintLevels }
+  paintLevels: { ...PRICING_DEFAULTS.paintLevels },
+  extraMaterials: PRICING_DEFAULTS.extraMaterials.map((material) => ({ ...material }))
 });
 
 const loadConstants = () => {
@@ -26,16 +27,39 @@ const loadConstants = () => {
     const saved = window.localStorage?.getItem(CONSTANTS_STORAGE_KEY);
     if (!saved) return defaults;
     const parsed = JSON.parse(saved);
+
+    // Labels and the list of materials always come from the config file, so a
+    // material added there later shows up even if older prices were saved.
+    const savedPrices = {};
+    (parsed.extraMaterials || []).forEach((material) => {
+      if (material && material.id !== undefined) savedPrices[material.id] = material.price;
+    });
+
     return {
       ...defaults,
       ...parsed,
       glueLevels: { ...defaults.glueLevels, ...parsed.glueLevels },
-      paintLevels: { ...defaults.paintLevels, ...parsed.paintLevels }
+      paintLevels: { ...defaults.paintLevels, ...parsed.paintLevels },
+      extraMaterials: defaults.extraMaterials.map((material) =>
+        savedPrices[material.id] !== undefined
+          ? { ...material, price: savedPrices[material.id] }
+          : material
+      )
     };
   } catch (err) {
     return defaults;
   }
 };
+
+/** Every extra material starts unticked, at the default quantity. */
+const initialExtras = () =>
+  PRICING_DEFAULTS.extraMaterials.reduce((acc, material) => {
+    acc[material.id] = {
+      checked: false,
+      quantity: PRICING_DEFAULTS.extraMaterialDefaultQuantity
+    };
+    return acc;
+  }, {});
 
 const sha256Hex = async (text) => {
   const digest = await window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
@@ -132,7 +156,8 @@ function Calculator() {
     grams: '',
     hours: '',
     glue: 'none',
-    paint: 'none'
+    paint: 'none',
+    extras: initialExtras()
   });
   const [showSettings, setShowSettings] = useState(false);
 
@@ -156,6 +181,22 @@ function Calculator() {
     setConstants((prev) => ({ ...prev, [group]: { ...prev[group], [level]: value } }));
   }, []);
 
+  const setExtra = useCallback((id, patch) => {
+    setInputs((prev) => ({
+      ...prev,
+      extras: { ...prev.extras, [id]: { ...prev.extras[id], ...patch } }
+    }));
+  }, []);
+
+  const setExtraPrice = useCallback((id, price) => {
+    setConstants((prev) => ({
+      ...prev,
+      extraMaterials: prev.extraMaterials.map((material) =>
+        material.id === id ? { ...material, price } : material
+      )
+    }));
+  }, []);
+
   const { lines, subtotal, total, roundingDiff } = useMemo(
     () => calculatePrice(inputs, constants),
     [inputs, constants]
@@ -169,7 +210,8 @@ function Calculator() {
       grams: '',
       hours: '',
       glue: 'none',
-      paint: 'none'
+      paint: 'none',
+      extras: initialExtras()
     });
 
   const levelOptions = (group) =>
@@ -272,6 +314,45 @@ function Calculator() {
               {levelOptions('paintLevels')}
             </select>
           </label>
+
+          <fieldset className="pc-fieldset">
+            <legend className="pc-label">חומרים נוספים</legend>
+            {constants.extraMaterials.map((material) => {
+              const chosen = inputs.extras[material.id] || {};
+              return (
+                <div
+                  className={`pc-extra ${chosen.checked ? 'is-checked' : ''}`}
+                  key={material.id}
+                >
+                  <label className="pc-extra-choice">
+                    <input
+                      type="checkbox"
+                      className="pc-checkbox"
+                      checked={Boolean(chosen.checked)}
+                      onChange={(event) => setExtra(material.id, { checked: event.target.checked })}
+                    />
+                    <span className="pc-extra-text">
+                      <span className="pc-extra-name">{material.label}</span>
+                      <span className="pc-extra-price">
+                        {formatAmount(toNumber(material.price))} {CURRENCY} ליח׳
+                      </span>
+                    </span>
+                  </label>
+                  <input
+                    type="number"
+                    className="pc-input pc-extra-quantity"
+                    inputMode="numeric"
+                    min="0"
+                    step="1"
+                    aria-label={`כמות — ${material.label}`}
+                    disabled={!chosen.checked}
+                    value={chosen.quantity ?? ''}
+                    onChange={(event) => setExtra(material.id, { quantity: event.target.value })}
+                  />
+                </div>
+              );
+            })}
+          </fieldset>
 
           <button type="button" className="pc-ghost-btn" onClick={resetInputs}>
             נקה שדות
@@ -390,6 +471,22 @@ function Calculator() {
 
               <h3 className="pc-settings-title">עבודת צביעה ({CURRENCY})</h3>
               <div className="pc-level-grid">{levelInputs('paintLevels')}</div>
+
+              <h3 className="pc-settings-title">חומרים נוספים ({CURRENCY} ליח׳)</h3>
+              {constants.extraMaterials.map((material) => (
+                <label className="pc-field pc-field-inline" key={`price-${material.id}`}>
+                  <span className="pc-label">{material.label}</span>
+                  <input
+                    type="number"
+                    className="pc-input"
+                    inputMode="decimal"
+                    min="0"
+                    step="0.5"
+                    value={material.price}
+                    onChange={(event) => setExtraPrice(material.id, event.target.value)}
+                  />
+                </label>
+              ))}
 
               <button type="button" className="pc-ghost-btn" onClick={resetConstants}>
                 שחזר ברירות מחדל

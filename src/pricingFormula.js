@@ -16,10 +16,33 @@ export const roundToStep = (amount, step) => {
 };
 
 /**
+ * Sums the ticked extra materials, and describes what was picked.
+ *
+ * @param {object} selection  { [id]: { checked, quantity } }
+ * @param {Array}  catalog    [{ id, label, price }]
+ */
+export function calculateExtras(selection, catalog) {
+  const picked = (catalog || [])
+    .map((material) => {
+      const chosen = (selection || {})[material.id];
+      if (!chosen || !chosen.checked) return null;
+      const quantity = toNumber(chosen.quantity);
+      return { ...material, quantity, amount: toNumber(material.price) * quantity };
+    })
+    .filter(Boolean);
+
+  return {
+    picked,
+    amount: picked.reduce((sum, material) => sum + material.amount, 0)
+  };
+}
+
+/**
  * Builds a full price breakdown.
  *
- * @param {object} inputs    { materialPricePerKg, grams, hours, glue, paint }
- * @param {object} constants { handlingFee, printerHourlyRate, glueLevels, paintLevels, roundToNearest }
+ * @param {object} inputs    { materialPricePerKg, grams, hours, glue, paint, extras }
+ * @param {object} constants { handlingFee, printerHourlyRate, glueLevels, paintLevels,
+ *                             extraMaterials, roundToNearest }
  * @returns {{ lines: Array, subtotal: number, total: number, roundingDiff: number }}
  */
 export function calculatePrice(inputs, constants) {
@@ -32,6 +55,7 @@ export function calculatePrice(inputs, constants) {
   const printerCost = hours * toNumber(constants.printerHourlyRate);
   const glueCost = toNumber(constants.glueLevels[inputs.glue]);
   const paintCost = toNumber(constants.paintLevels[inputs.paint]);
+  const extras = calculateExtras(inputs.extras, constants.extraMaterials);
 
   const lines = [
     {
@@ -39,6 +63,16 @@ export function calculatePrice(inputs, constants) {
       label: 'חומר',
       detail: `${grams} גרם × ${pricePerKg} ₪ לק״ג`,
       amount: materialCost
+    },
+    {
+      key: 'extras',
+      label: 'חומרים נוספים',
+      detail: extras.picked.length
+        ? extras.picked
+            .map((material) => `${material.label} ×${material.quantity}`)
+            .join(' · ')
+        : 'לא נבחרו',
+      amount: extras.amount
     },
     {
       key: 'handling',
@@ -72,8 +106,5 @@ export function calculatePrice(inputs, constants) {
   return { lines, subtotal, total, roundingDiff: total - subtotal };
 }
 
-/** Trims floating point noise and formats an amount for display. */
-export const formatAmount = (amount) => {
-  const rounded = Math.round(amount * 100) / 100;
-  return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(2);
-};
+/** Trims floating point noise and formats an amount for display (6, 1.5, 0.25). */
+export const formatAmount = (amount) => String(Math.round(amount * 100) / 100);

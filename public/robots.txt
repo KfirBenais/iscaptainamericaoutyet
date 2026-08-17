@@ -1,3 +1,4 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+# Internal pricing calculator - keep it out of search results.
+Disallow: /pricing
